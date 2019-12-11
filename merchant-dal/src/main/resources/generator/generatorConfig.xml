@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
 <generatorConfiguration>
     <!-- 数据库驱动:换成你本地的驱动包位置-->
-    <classPathEntry  location="C:/Users/Administrator/.m2/repository/mysql/mysql-connector-java/5.1.46/mysql-connector-java-5.1.46.jar"/>
+    <classPathEntry  location="C:/Software/maven/repository/mysql/mysql-connector-java/5.1.46/mysql-connector-java-5.1.46.jar"/>
     <context id="DB2Tables"  targetRuntime="MyBatis3">
     		<property name="javaFileEncoding" value="UTF-8"/>
         <!-- 自定义的注释生成插件-->
@@ -67,7 +67,7 @@
         								   								  selectByPrimaryKeyQueryId="false">
         	<property name="useActualColumnNames" value="false"/>
         </table>
-        <table tableName="f_shop_attach"  domainObjectName="ShopAttach"          enableSelectByPrimaryKey="true"
+        <table tableName="shop_attach"  domainObjectName="ShopAttach"          enableSelectByPrimaryKey="true"
         								   								  enableDeleteByPrimaryKey="true"
         								   								  enableUpdateByPrimaryKey="true"
         								   								  enableCountByExample="false" 
