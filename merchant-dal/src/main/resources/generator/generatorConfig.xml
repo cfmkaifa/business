@@ -67,7 +67,7 @@
         								   								  selectByPrimaryKeyQueryId="false">
         	<property name="useActualColumnNames" value="false"/>
         </table>
-        <table tableName="shop_attach"  domainObjectName="ShopAttach"          enableSelectByPrimaryKey="true"
+        <table tableName="f_shop_attach"  domainObjectName="ShopAttach"          enableSelectByPrimaryKey="true"
         								   								  enableDeleteByPrimaryKey="true"
         								   								  enableUpdateByPrimaryKey="true"
         								   								  enableCountByExample="false" 
