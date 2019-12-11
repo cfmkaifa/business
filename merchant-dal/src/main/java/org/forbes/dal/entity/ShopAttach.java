@@ -1,6 +1,5 @@
 package org.forbes.dal.entity;
 
-import java.util.Date;
 import lombok.Data;
 
 /**
@@ -8,45 +7,6 @@ import lombok.Data;
  */
 @Data
 public class ShopAttach extends BaseEntity {
-    /**
-     * 主键
-     * Table:     f_shop_attach
-     * Column:    id
-     * Nullable:  false
-     */
-    private Long id;
-
-    /**
-     * Table:     f_shop_attach
-     * Column:    create_by
-     * Nullable:  true
-     */
-    private String createBy;
-
-    /**
-     * 创建时间
-     * Table:     f_shop_attach
-     * Column:    create_time
-     * Nullable:  true
-     */
-    private Date createTime;
-
-    /**
-     * 更新人
-     * Table:     f_shop_attach
-     * Column:    update_by
-     * Nullable:  true
-     */
-    private String updateBy;
-
-    /**
-     * 更新时间
-     * Table:     f_shop_attach
-     * Column:    update_time
-     * Nullable:  true
-     */
-    private Date updateTime;
-
     /**
      * 数据ID
      * Table:     f_shop_attach

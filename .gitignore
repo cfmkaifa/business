@@ -1,1 +1,18 @@
 /target/
+### Example user template template
+### Example user template
+
+# IntelliJ project files
+.idea
+*.iml
+out
+gen
+.idea/business.iml
+.idea/compiler.xml
+.idea/modules.xml
+.idea/workspace.xml
+merchant-biz/merchant-biz.iml
+merchant-comm/merchant-comm.iml
+merchant-config/merchant-config.iml
+merchant-dal/merchant-dal.iml
+merchant-provider/merchant-provider.iml

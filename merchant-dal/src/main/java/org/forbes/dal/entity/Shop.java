@@ -1,52 +1,20 @@
 package org.forbes.dal.entity;
 
-import java.util.Date;
+import com.baomidou.mybatisplus.annotation.TableName;
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 /**
  * Table: f_shop
  */
 @Data
+@ApiModel(description="商家信息")
+@EqualsAndHashCode(callSuper = false)
+@Accessors(chain = true)
+@TableName("f_shop")
 public class Shop extends BaseEntity {
-    /**
-     * 主键
-     * Table:     f_shop
-     * Column:    id
-     * Nullable:  false
-     */
-    private Long id;
-
-    /**
-     * Table:     f_shop
-     * Column:    create_by
-     * Nullable:  true
-     */
-    private String createBy;
-
-    /**
-     * 创建时间
-     * Table:     f_shop
-     * Column:    create_time
-     * Nullable:  true
-     */
-    private Date createTime;
-
-    /**
-     * 更新人
-     * Table:     f_shop
-     * Column:    update_by
-     * Nullable:  true
-     */
-    private String updateBy;
-
-    /**
-     * 更新时间
-     * Table:     f_shop
-     * Column:    update_time
-     * Nullable:  true
-     */
-    private Date updateTime;
-
     /**
      * Table:     f_shop
      * Column:    name

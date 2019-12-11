@@ -1,17 +1,8 @@
 package org.forbes.dal.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import org.forbes.dal.entity.ShopAttach;
 
-public interface ShopAttachMapper {
-    int deleteByPrimaryKey(Long id);
+public interface ShopAttachMapper extends BaseMapper<ShopAttach> {
 
-    int insert(ShopAttach record);
-
-    int insertSelective(ShopAttach record);
-
-    ShopAttach selectByPrimaryKey(Long id);
-
-    int updateByPrimaryKeySelective(ShopAttach record);
-
-    int updateByPrimaryKey(ShopAttach record);
 }
