@@ -34,7 +34,7 @@ public class ShopController {
      * @修改日期 (请填上修改该文件时的日期)
      */
     @RequestMapping(value = "/update-shop-auditstate/{id}",method = RequestMethod.PUT)
-    @ApiOperation("审核冻结用户")
+    @ApiOperation("审核冻结商家")
     @ApiImplicitParam(value="auditState",name="商家状态",required=false)
     @ApiResponses(value = {
             @ApiResponse(code=500,message = Result.COMM_ACTION_ERROR_MSG),
