@@ -1,10 +1,16 @@
 package org.forbes.dal.entity;
 
+import java.util.List;
+
+import javax.validation.constraints.NotEmpty;
+
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
+
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.experimental.Accessors;
 
 /**
  * Table: f_shop
@@ -12,14 +18,18 @@ import lombok.experimental.Accessors;
 @Data
 @ApiModel(description="商家信息")
 @EqualsAndHashCode(callSuper = false)
-@Accessors(chain = true)
 @TableName("f_shop")
 public class Shop extends BaseEntity {
-    /**
+
+	private static final long serialVersionUID = 1845356560770496019L;
+
+	/**
      * Table:     f_shop
      * Column:    name
      * Nullable:  true
      */
+	@ApiModelProperty(value="商家名称",required = true)
+	@NotEmpty(message="商家名称为空")
     private String name;
 
     /**
@@ -27,6 +37,7 @@ public class Shop extends BaseEntity {
      * Column:    email
      * Nullable:  true
      */
+	@ApiModelProperty(value="邮箱",required = true)
     private String email;
 
     /**
@@ -34,6 +45,8 @@ public class Shop extends BaseEntity {
      * Column:    phone
      * Nullable:  true
      */
+	@ApiModelProperty(value="电话",required = true)
+	@NotEmpty(message="电话为空")
     private String phone;
 
     /**
@@ -41,6 +54,7 @@ public class Shop extends BaseEntity {
      * Column:    fax
      * Nullable:  true
      */
+	@ApiModelProperty(value="传真",required = true)
     private String fax;
 
     /**
@@ -49,6 +63,8 @@ public class Shop extends BaseEntity {
      * Column:    org_code
      * Nullable:  true
      */
+	@ApiModelProperty(value="机构代码",required = true)
+	@NotEmpty(message="机构代码代码为空")
     private String orgCode;
 
     /**
@@ -57,6 +73,8 @@ public class Shop extends BaseEntity {
      * Column:    legal_person
      * Nullable:  true
      */
+	@ApiModelProperty(value="法人",required = true)
+	@NotEmpty(message="法人为空")
     private String legalPerson;
 
     /**
@@ -65,5 +83,18 @@ public class Shop extends BaseEntity {
      * Column:    audit_state
      * Nullable:  true
      */
+	@ApiModelProperty(value="审核状态",required = true)
     private String auditState;
+	
+	
+	
+	@ApiModelProperty(value="商户账号信息",required = true)
+	@TableField(exist=false)
+	private ShopAccount shopAccount;
+	
+	
+	
+	@ApiModelProperty(value="0-商家身份证，1-法人身份证，2-营业执照",required = true)
+	@TableField(exist=false)
+	List<ShopAttach> shopAttachs;
 }

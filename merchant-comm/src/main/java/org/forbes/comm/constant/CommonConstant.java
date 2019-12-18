@@ -25,4 +25,5 @@ public interface CommonConstant {
     public static final String USER_NAME = "username";
     public static final String PROVILES_CODE = "spring.profiles.active";
     public static final String ACTIVE_CODE = "dev";
+    public static final String DEFAULT_PASSWD = "123456";
 }

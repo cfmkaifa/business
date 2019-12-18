@@ -43,4 +43,39 @@
       <version>0.0.1-SNAPSHOT</version>
     </dependency>
   </dependencies>
+  <build>
+  	<plugins>
+		<!-- 打包跳过测试 -->
+        <plugin>
+        	 <groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-maven-plugin</artifactId>
+	        <configuration>
+						<mainClass>org.forbes.ForbesApplication</mainClass>
+			</configuration>
+		<dependencies>
+			<dependency>
+	         	<groupId>org.forbes</groupId>
+	         	<artifactId>merchant-dal</artifactId>
+	         	<version>0.0.1-SNAPSHOT</version>
+	         	<scope>system</scope>
+	         	<systemPath>${parentPath}merchant-dal/target/merchant-dal-0.0.1-SNAPSHOT.jar</systemPath>
+	         </dependency>
+	         <dependency>
+	         	<groupId>org.forbes</groupId>
+	         	<artifactId>merchant-comm</artifactId>
+	         	<version>0.0.1-SNAPSHOT</version>
+	         	<scope>system</scope>
+	         	<systemPath>${parentPath}merchant-comm/target/merchant-comm-0.0.1-SNAPSHOT.jar</systemPath>
+	         </dependency>
+	         <dependency>
+	         	<groupId>org.forbes</groupId>
+	         	<artifactId>merchant-biz</artifactId>
+	         	<version>0.0.1-SNAPSHOT</version>
+	         	<scope>system</scope>
+	         	<systemPath>${parentPath}merchant-biz/target/merchant-biz-0.0.1-SNAPSHOT.jar</systemPath>
+	         </dependency>
+		</dependencies>
+	</plugin>
+  	</plugins>
+  </build>
 </project>

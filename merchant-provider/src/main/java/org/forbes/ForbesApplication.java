@@ -1,8 +1,8 @@
 package org.forbes;
 import javax.servlet.MultipartConfigElement;
 
+import org.apache.dubbo.config.spring.context.annotation.DubboComponentScan;
 import org.forbes.comm.constant.CommonConstant;
-import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.MultipartConfigFactory;
@@ -13,7 +13,6 @@ import springfox.documentation.swagger2.annotations.EnableSwagger2;
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableSwagger2
-@MapperScan(basePackages={"org.forbes.dal.mapper"})
 public class ForbesApplication {
 
 	/***启动类
@@ -26,7 +25,7 @@ public class ForbesApplication {
 	 */
 	 public static void main(String[] args) {
 		    System.setProperty(CommonConstant.PROVILES_CODE, CommonConstant.ACTIVE_CODE);
-	    	SpringApplication.run(ForbesApplication.class, args);
+		    SpringApplication.run(ForbesApplication.class, args);
 	    }
 	 
 	 

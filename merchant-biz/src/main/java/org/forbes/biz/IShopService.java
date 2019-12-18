@@ -10,4 +10,16 @@ import org.forbes.dal.entity.Shop;
 
 public interface IShopService extends IService<Shop> {
 
+	
+	
+	
+	/***
+	 * registShop方法慨述:注册商家
+	 * @param shop void
+	 * @创建人 huanghy
+	 * @创建时间 2019年12月16日 下午1:17:39
+	 * @修改人 (修改了该文件，请填上修改人的名字)
+	 * @修改日期 (请填上修改该文件时的日期)
+	 */
+	void registShop(Shop shop);
 }

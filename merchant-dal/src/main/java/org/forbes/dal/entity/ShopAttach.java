@@ -1,13 +1,25 @@
 package org.forbes.dal.entity;
 
+import com.baomidou.mybatisplus.annotation.TableName;
+
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 
 /**
  * Table: f_shop_attach
  */
 @Data
+@ApiModel(description="商家附件")
+@EqualsAndHashCode(callSuper = false)
+@TableName("f_shop_attach")
 public class ShopAttach extends BaseEntity {
-    /**
+
+
+	private static final long serialVersionUID = -3561817498582590410L;
+
+	/**
      * 数据ID
      * Table:     f_shop_attach
      * Column:    data_id
@@ -29,6 +41,7 @@ public class ShopAttach extends BaseEntity {
      * Column:    suffix
      * Nullable:  true
      */
+    @ApiModelProperty(value = "后缀")
     private String suffix;
 
     /**
@@ -37,6 +50,7 @@ public class ShopAttach extends BaseEntity {
      * Column:    cn_name
      * Nullable:  true
      */
+    @ApiModelProperty(value = "中文名称")
     private String cnName;
 
     /**
@@ -44,6 +58,7 @@ public class ShopAttach extends BaseEntity {
      * Column:    en_name
      * Nullable:  true
      */
+    @ApiModelProperty(value = "英文名称")
     private String enName;
 
     /**
@@ -52,14 +67,16 @@ public class ShopAttach extends BaseEntity {
      * Column:    file_path
      * Nullable:  true
      */
+    @ApiModelProperty(value = "文件地址")
     private String filePath;
 
     /**
-     * 0-大图，1-小图，3-中图
+     * 图片
      * Table:     f_shop_attach
      * Column:    type
      * Nullable:  true
      */
+    @ApiModelProperty(value = "图片")
     private String type;
 
     /**
@@ -68,5 +85,6 @@ public class ShopAttach extends BaseEntity {
      * Column:    data_type
      * Nullable:  true
      */
+    @ApiModelProperty(value = "0-商家身份证，1-法人身份证，2-营业执照")
     private String dataType;
 }
