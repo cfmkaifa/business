@@ -8,10 +8,6 @@ import org.springframework.stereotype.Service;
 
 @Service("shopManagerService")
 public class ShopManagerServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IShopService {
-    @Override
-    public void registShop(Shop shop) {
-
-    }
 
     @Override
     public Shop getByName(String name) {

@@ -21,18 +21,18 @@ import java.util.List;
 @FeignClient(name="${spring.application.usercenter}",url = "http://129.211.88.251:888/usercenter")
 public interface ISysUserService {
 
-
-	/***
-	 * registerUser方法慨述:
-	 * @param sysUser
-	 * @param roleCode
-	 * @return Result<RemoteSysUserDto>
-	 * @创建人 huanghy
-	 * @创建时间 2019年12月16日 上午9:28:49
-	 * @修改人 (修改了该文件，请填上修改人的名字)
-	 * @修改日期 (请填上修改该文件时的日期)
-	 */
-	 Result<RemoteSysUserDto> registerUser(RemoteSysUserDto sysUser, String roleCode);
+//
+//	/***
+//	 * registerUser方法慨述:
+//	 * @param sysUser
+//	 * @param roleCode
+//	 * @return Result<RemoteSysUserDto>
+//	 * @创建人 huanghy
+//	 * @创建时间 2019年12月16日 上午9:28:49
+//	 * @修改人 (修改了该文件，请填上修改人的名字)
+//	 * @修改日期 (请填上修改该文件时的日期)
+//	 */
+//	 Result<RemoteSysUserDto> registerUser(RemoteSysUserDto sysUser, String roleCode);
 
 	/***
 	 * 方法概述:根据用户名查询用户信息

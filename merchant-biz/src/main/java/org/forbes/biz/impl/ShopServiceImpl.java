@@ -59,75 +59,75 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
 	
 	
 	
-	/***全局事务
-	 */
-	@GlobalTransactional
-	@Transactional(rollbackFor=Exception.class)
-	public void registShop(Shop shop){
-		try {
-			shop.setAuditState(ShopStausEnum.UNAUDITED.getCode());
-			baseMapper.insert(shop);
-			Long shopId = shop.getId();
-			List<ShopAttach> shopAttachs = shop.getShopAttachs();
-			if(ConvertUtils.isNotEmpty(shopAttachs)){
-				long dataTypeCount = shopAttachs.stream().filter(shopAttach -> !DataTypeEnum.existsCode(shopAttach.getDataType())).count();
-				if(dataTypeCount > 0 ){
-					throw new ForbesException(BizResultEnum.ATTCH_DATA_TYPE_ERROR_MSG.getBizCode(),BizResultEnum.ATTCH_DATA_TYPE_ERROR_MSG.getBizMessage());
-				}
-				shopAttachs.forEach(shopAttach -> {
-					shopAttach.setDataId(shopId);
-					shopAttachMapper.insert(shopAttach);
-				});
-			}
-			ShopAccount shopAccount = shop.getShopAccount();
-			if(ConvertUtils.isEmpty(shopAccount)){
-				shopAccount = new ShopAccount();
-			}
-			shopAccount.setShopId(shopId);
-			if(ConvertUtils.isEmpty(shopAccount.getRealname())){
-				shopAccount.setRealname(shop.getName());
-			}
-			if(ConvertUtils.isEmpty(shopAccount.getUsername())){
-				shopAccount.setUsername(shop.getPhone());
-			}
-			if(ConvertUtils.isEmpty(shopAccount.getPassword())){
-				shopAccount.setPassword(CommonConstant.DEFAULT_PASSWD);
-			}
-			String phone = shop.getPhone();
-			shopAccount.setPhone(phone);
-			/***增加用户**/
-			RemoteSysUserDto sysUserDto = new RemoteSysUserDto();
-			sysUserDto.setUsername(shopAccount.getUsername());
-			sysUserDto.setPassword(shopAccount.getPassword());
-			sysUserDto.setAdminFlag(AdminFlagEnum.ORDINARY.getCode());
-			sysUserDto.setAvatar(shopAccount.getAvatar());
-			sysUserDto.setPhone(phone);
-			sysUserDto.setRealname(shopAccount.getRealname());
-			Result<RemoteSysUserDto> result = sysUserService.registerUser(sysUserDto, "provider");
-			if("0000".equals(result.getBizCode())){
-				RemoteSysUserDto remoteSysUserDto = result.getResult();
-				shopAccount.setUserId(remoteSysUserDto.getId());
-				shopAccount.setShopId(shopId);
-				shopAccount.setPassword(remoteSysUserDto.getPassword());
-				shopAccount.setSalt(remoteSysUserDto.getSalt());
-				shopAccountMapper.insert(shopAccount);
-			} else {
-				throw new ForbesException(result.getBizCode(),result.getMessage());
-			}
-		}catch(Exception e){
-			try {
-				e.printStackTrace();
-				GlobalTransactionContext.reload(RootContext.getXID()).rollback();
-				if ( !(e instanceof ForbesException)){
-					throw new ForbesException(BizResultEnum.REMOTE_ERROR_MSG.getBizCode(),e.getMessage());
-				}
-				throw e;
-			} catch (TransactionException e1) {
-				log.trace("全局事务回滚异常：",e1);
-				throw new ForbesException(BizResultEnum.REMOTE_ERROR_MSG.getBizCode(),BizResultEnum.REMOTE_ERROR_MSG.getBizMessage());
-			}
-		}
-	}
+//	/***全局事务
+//	 */
+//	@GlobalTransactional
+//	@Transactional(rollbackFor=Exception.class)
+//	public void registShop(Shop shop){
+//		try {
+//			shop.setAuditState(ShopStausEnum.UNAUDITED.getCode());
+//			baseMapper.insert(shop);
+//			Long shopId = shop.getId();
+//			List<ShopAttach> shopAttachs = shop.getShopAttachs();
+//			if(ConvertUtils.isNotEmpty(shopAttachs)){
+//				long dataTypeCount = shopAttachs.stream().filter(shopAttach -> !DataTypeEnum.existsCode(shopAttach.getDataType())).count();
+//				if(dataTypeCount > 0 ){
+//					throw new ForbesException(BizResultEnum.ATTCH_DATA_TYPE_ERROR_MSG.getBizCode(),BizResultEnum.ATTCH_DATA_TYPE_ERROR_MSG.getBizMessage());
+//				}
+//				shopAttachs.forEach(shopAttach -> {
+//					shopAttach.setDataId(shopId);
+//					shopAttachMapper.insert(shopAttach);
+//				});
+//			}
+//			ShopAccount shopAccount = shop.getShopAccount();
+//			if(ConvertUtils.isEmpty(shopAccount)){
+//				shopAccount = new ShopAccount();
+//			}
+//			shopAccount.setShopId(shopId);
+//			if(ConvertUtils.isEmpty(shopAccount.getRealname())){
+//				shopAccount.setRealname(shop.getName());
+//			}
+//			if(ConvertUtils.isEmpty(shopAccount.getUsername())){
+//				shopAccount.setUsername(shop.getPhone());
+//			}
+//			if(ConvertUtils.isEmpty(shopAccount.getPassword())){
+//				shopAccount.setPassword(CommonConstant.DEFAULT_PASSWD);
+//			}
+//			String phone = shop.getPhone();
+//			shopAccount.setPhone(phone);
+//			/***增加用户**/
+//			RemoteSysUserDto sysUserDto = new RemoteSysUserDto();
+//			sysUserDto.setUsername(shopAccount.getUsername());
+//			sysUserDto.setPassword(shopAccount.getPassword());
+//			sysUserDto.setAdminFlag(AdminFlagEnum.ORDINARY.getCode());
+//			sysUserDto.setAvatar(shopAccount.getAvatar());
+//			sysUserDto.setPhone(phone);
+//			sysUserDto.setRealname(shopAccount.getRealname());
+//			Result<RemoteSysUserDto> result = sysUserService.registerUser(sysUserDto, "provider");
+//			if("0000".equals(result.getBizCode())){
+//				RemoteSysUserDto remoteSysUserDto = result.getResult();
+//				shopAccount.setUserId(remoteSysUserDto.getId());
+//				shopAccount.setShopId(shopId);
+//				shopAccount.setPassword(remoteSysUserDto.getPassword());
+//				shopAccount.setSalt(remoteSysUserDto.getSalt());
+//				shopAccountMapper.insert(shopAccount);
+//			} else {
+//				throw new ForbesException(result.getBizCode(),result.getMessage());
+//			}
+//		}catch(Exception e){
+//			try {
+//				e.printStackTrace();
+//				GlobalTransactionContext.reload(RootContext.getXID()).rollback();
+//				if ( !(e instanceof ForbesException)){
+//					throw new ForbesException(BizResultEnum.REMOTE_ERROR_MSG.getBizCode(),e.getMessage());
+//				}
+//				throw e;
+//			} catch (TransactionException e1) {
+//				log.trace("全局事务回滚异常：",e1);
+//				throw new ForbesException(BizResultEnum.REMOTE_ERROR_MSG.getBizCode(),BizResultEnum.REMOTE_ERROR_MSG.getBizMessage());
+//			}
+//		}
+//	}
 
 	/***
 	 * getByName方法概述:根据名字查询商家信息

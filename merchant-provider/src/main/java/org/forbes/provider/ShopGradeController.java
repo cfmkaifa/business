@@ -13,6 +13,7 @@ import org.forbes.biz.IShopGradeService;
 import org.forbes.comm.constant.DataColumnConstant;
 import org.forbes.comm.constant.PermsCommonConstant;
 import org.forbes.comm.constant.SaveValid;
+import org.forbes.comm.constant.UpdateValid;
 import org.forbes.comm.enums.BizResultEnum;
 import org.forbes.comm.enums.ShopGradeEnum;
 import org.forbes.comm.model.BasePageDto;
@@ -93,6 +94,23 @@ public class ShopGradeController  {
         return result;
     }
 
-
+    @ApiOperation("编辑店铺等级")
+    @ApiResponses(value = {
+            @ApiResponse(code=200,message = Result.COMM_ACTION_MSG),
+            @ApiResponse(code=500,message = Result.COMM_ACTION_ERROR_MSG)
+    })
+    @RequestMapping(value = "/edit",method = RequestMethod.PUT)
+    public  Result<ShopGrade> updateShopGrade(@RequestBody @Validated(value=UpdateValid.class) ShopGrade shopGrade){
+        Result<ShopGrade> result=new Result<ShopGrade>();
+        ShopGrade old = shopGradeService.getById(shopGrade.getId());
+        if(ConvertUtils.isEmpty(old)){
+            result.setBizCode(BizResultEnum.ENTITY_EMPTY.getBizCode());
+            result.setMessage(BizResultEnum.ENTITY_EMPTY.getBizMessage());
+            return result;
+        }
+        shopGradeService.updateById(shopGrade);
+        result.setResult(shopGrade);
+        return result;
+    }
 
 }
