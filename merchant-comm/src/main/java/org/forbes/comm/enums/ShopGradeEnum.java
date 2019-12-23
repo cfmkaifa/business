@@ -49,7 +49,7 @@ public enum ShopGradeEnum {
      * @修改人 (修改了该文件，请填上修改人的名字)
      * @修改日期 (请填上修改该文件时的日期)
      */
-    public static List<Map<String,String>> receUserStaus(){
+    public static List<Map<String,String>> receShopGradeStaus(){
         return Arrays.asList(ShopGradeEnum.values()).stream().map(shopGrade -> {
             Map<String,String> reponseMap = Maps.newHashMap();
             ShopGradeEnum shoptGrade = ((ShopGradeEnum)shopGrade);

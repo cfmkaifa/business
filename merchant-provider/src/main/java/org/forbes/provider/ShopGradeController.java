@@ -4,18 +4,13 @@ import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
+import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.forbes.biz.IShopGradeService;
-import org.forbes.comm.constant.DataColumnConstant;
-import org.forbes.comm.constant.PermsCommonConstant;
-import org.forbes.comm.constant.SaveValid;
-import org.forbes.comm.constant.UpdateValid;
+import org.forbes.comm.constant.*;
 import org.forbes.comm.enums.BizResultEnum;
 import org.forbes.comm.enums.ShopGradeEnum;
+import org.forbes.comm.exception.ForbesException;
 import org.forbes.comm.model.BasePageDto;
 import org.forbes.comm.model.ShopGradeDto;
 import org.forbes.comm.model.SysRole;
@@ -24,10 +19,11 @@ import org.forbes.comm.vo.Result;
 import org.forbes.dal.entity.ShopGrade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @author lzw
@@ -72,7 +68,7 @@ public class ShopGradeController  {
     }
 
     /***
-     * addShopGrade方法概述:
+     * addShopGrade方法概述:增加店铺等级
      * @param shopGrade
      * @return org.forbes.comm.vo.Result<org.forbes.dal.entity.ShopGrade>
      * @创建人 Tom
@@ -94,6 +90,15 @@ public class ShopGradeController  {
         return result;
     }
 
+    /***
+     * updateShopGrade方法概述:编辑店铺等级
+     * @param shopGrade
+     * @return org.forbes.comm.vo.Result<org.forbes.dal.entity.ShopGrade>
+     * @创建人 Tom
+     * @创建时间 2019/12/23 17:31
+     * @修改人 (修改了该文件，请填上修改人的名字)
+     * @修改日期 (请填上修改该文件时的日期)
+     */
     @ApiOperation("编辑店铺等级")
     @ApiResponses(value = {
             @ApiResponse(code=200,message = Result.COMM_ACTION_MSG),
@@ -110,6 +115,75 @@ public class ShopGradeController  {
         }
         shopGradeService.updateById(shopGrade);
         result.setResult(shopGrade);
+        return result;
+    }
+
+    /***
+     * delete方法概述:删除店铺等级
+     * @param id
+     * @return org.forbes.comm.vo.Result<org.forbes.dal.entity.ShopGrade>
+     * @创建人 Tom
+     * @创建时间 2019/12/23 17:33
+     * @修改人 (修改了该文件，请填上修改人的名字)
+     * @修改日期 (请填上修改该文件时的日期)
+     */
+    @ApiOperation("删除店铺等级")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "id",value = "店铺等级ID",required = true)
+    })
+    @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
+    public Result<ShopGrade> delete(@RequestParam(name="id",required=true) String id) {
+        Result<ShopGrade> result = new Result<ShopGrade>();
+        ShopGrade shopGrade = shopGradeService.getById(id);
+        if(ConvertUtils.isEmpty(shopGrade)){
+            result.setBizCode(BizResultEnum.ENTITY_EMPTY.getBizCode());
+            result.setMessage(BizResultEnum.ENTITY_EMPTY.getBizMessage());
+            return result;
+        }
+        shopGradeService.removeById(id);
+        return result;
+    }
+
+    /***
+     * deleteBatch方法概述:批量删除店铺等级
+     * @param ids
+     * @return org.forbes.comm.vo.Result<java.lang.Boolean>
+     * @创建人 Tom
+     * @创建时间 2019/12/23 17:34
+     * @修改人 (修改了该文件，请填上修改人的名字)
+     * @修改日期 (请填上修改该文件时的日期)
+     */
+    @ApiOperation("批量删除店铺等级")
+    @ApiImplicitParams(value = {
+            @ApiImplicitParam(name = "ids",value = "店铺等级IDs",required = true)
+    })
+    @RequestMapping(value = "/delete-batch", method = RequestMethod.DELETE)
+    public Result<Boolean> deleteBatch(@RequestParam(name="ids",required=true) String ids) {
+        // 定义实体类的数据库查询对象
+        Result<Boolean> result = new Result<Boolean>();
+        try {
+            shopGradeService.removeByIds(Arrays.asList(ids.split(CommonConstant.SEPARATOR)));
+        }catch(ForbesException e){
+            result.setBizCode(e.getErrorCode());
+            result.setMessage(e.getErrorMsg());
+        }
+        return result;
+    }
+
+    /***
+     * receShopGradeStaus方法概述:
+     * @param
+     * @return org.forbes.comm.vo.Result<java.util.List<java.util.Map<java.lang.String,java.lang.String>>>
+     * @创建人 Tom
+     * @创建时间 2019/12/23 18:07
+     * @修改人 (修改了该文件，请填上修改人的名字)
+     * @修改日期 (请填上修改该文件时的日期)
+     */
+    @RequestMapping(value = "/grade-status", method = RequestMethod.GET)
+    @ApiOperation("获取等级枚举值")
+    public Result<List<Map<String, String>>> receShopGradeStaus() {
+        Result<List<Map<String, String>>> result = new Result<List<Map<String, String>>>();
+        result.setResult(ShopGradeEnum.receShopGradeStaus());
         return result;
     }
 
