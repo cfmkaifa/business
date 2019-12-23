@@ -1,6 +1,5 @@
 package org.forbes.provider;
 
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -18,11 +17,11 @@ import org.forbes.comm.model.SysRole;
 import org.forbes.comm.model.SysUser;
 import org.forbes.comm.utils.ConvertUtils;
 import org.forbes.comm.vo.Result;
-import org.forbes.comm.vo.ShopUserVo;
 import org.forbes.dal.entity.Shop;
 import org.forbes.dal.entity.ShopAttach;
 import org.forbes.servcie.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -38,6 +37,7 @@ import java.util.List;
 public class ShopController {
 
     @Autowired
+    @Qualifier(value = "shopManagerService")
     IShopService shopService;
 
     @Autowired

@@ -25,6 +25,7 @@ import org.forbes.dal.mapper.ShopMapper;
 import org.forbes.dal.mapper.ext.ShopExtMapper;
 import org.forbes.servcie.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -42,6 +43,7 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 @Service
+@ConditionalOnProperty(value ="seata.auto.enabled",matchIfMissing = true)
 public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IShopService{
 
 	

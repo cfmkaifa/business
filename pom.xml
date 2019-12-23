@@ -115,6 +115,10 @@
          	<version>1.2.35</version>
         </dependency>
         <!--feign-->
+	  <dependency>
+		  <groupId>org.springframework.cloud</groupId>
+		  <artifactId>spring-cloud-starter-openfeign</artifactId>
+	  </dependency>
         <dependency>
 			   <groupId>io.github.openfeign</groupId>
 			   <artifactId>feign-core</artifactId>

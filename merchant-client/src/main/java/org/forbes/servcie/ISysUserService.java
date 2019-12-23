@@ -4,9 +4,12 @@ import org.forbes.comm.model.RemoteSysUserDto;
 import org.forbes.comm.model.SysRole;
 import org.forbes.comm.model.SysUser;
 import org.forbes.comm.vo.Result;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.cloud.openfeign.FeignClient;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -14,6 +17,8 @@ import java.util.List;
  * ISysUserService概要说明：用户外部接口
  * @author Huanghy
  */
+@ConditionalOnProperty(name="spring.application.usercenter")
+@FeignClient(name="${spring.application.usercenter}",url = "http://129.211.88.251:888/usercenter")
 public interface ISysUserService {
 
 
@@ -27,7 +32,7 @@ public interface ISysUserService {
 	 * @修改人 (修改了该文件，请填上修改人的名字)
 	 * @修改日期 (请填上修改该文件时的日期)
 	 */
-	public Result<RemoteSysUserDto> registerUser(RemoteSysUserDto sysUser, String roleCode);
+	 Result<RemoteSysUserDto> registerUser(RemoteSysUserDto sysUser, String roleCode);
 
 	/***
 	 * 方法概述:根据用户名查询用户信息
@@ -50,7 +55,7 @@ public interface ISysUserService {
 	 * @修改人 (修改了该文件，请填上修改人的名字)
 	 * @修改日期 (请填上修改该文件时的日期)
 	 */
-	@RequestMapping(value = "/user/get-role-list/{userId}", method = RequestMethod.GET)
-	List<SysRole> selectRoleByUserId(@PathVariable Long userId);
+	@RequestMapping(value = "/user/get-role-list", method = RequestMethod.GET)
+	List<SysRole> selectRoleByUserId(@RequestParam("userId") Long userId);
 
 }
