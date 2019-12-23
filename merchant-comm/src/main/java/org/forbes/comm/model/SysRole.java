@@ -14,9 +14,6 @@ import java.io.Serializable;
  * Table: f_sys_role
  */
 @Data
-@ApiModel(description="角色信息")
-@EqualsAndHashCode(callSuper = false)
-@TableName("f_sys_role")
 public class SysRole implements Serializable {
     
 	

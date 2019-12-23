@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
+import org.forbes.biz.IShopAttachService;
 import org.forbes.biz.IShopService;
 import org.forbes.comm.constant.DataColumnConstant;
 import org.forbes.comm.constant.PermsCommonConstant;
@@ -19,6 +20,7 @@ import org.forbes.comm.utils.ConvertUtils;
 import org.forbes.comm.vo.Result;
 import org.forbes.comm.vo.ShopUserVo;
 import org.forbes.dal.entity.Shop;
+import org.forbes.dal.entity.ShopAttach;
 import org.forbes.servcie.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -40,6 +42,9 @@ public class ShopController {
 
     @Autowired
     ISysUserService sysUserService;
+
+    @Autowired
+    IShopAttachService shopAttachService;
 
     /***
      * updateShopAuditState方法概述:
@@ -97,18 +102,23 @@ public class ShopController {
     public Result<Shop> getByName(@RequestParam(value = "name",required = true)String name,@RequestParam(value = "phone",required = true)String phone){
         Result<Shop> result=new Result<Shop>();
         //查询商家信息
-        Shop product = shopService.getByName(name);
+        Shop shop = shopService.getByName(name);
         //根据联系方式查询用户信息
         SysUser sysUser=sysUserService.getUserByName(phone);
         if(ConvertUtils.isNotEmpty(sysUser)){
-            product.setSysUsers(sysUser);
+            shop.setSysUsers(sysUser);
         }
         //根据用户id方式查询角色
         List<SysRole> sysRoles=sysUserService.selectRoleByUserId(sysUser.getId());
         if(ConvertUtils.isNotEmpty(sysRoles)){
-            product.setSysRoles(sysRoles);
+            shop.setSysRoles(sysRoles);
         }
-        result.setResult(product);
+        //查询商家附件信息
+        List<ShopAttach> shopAttaches = shopAttachService.list(new QueryWrapper<ShopAttach>().eq(DataColumnConstant.NAME,name));
+        if(ConvertUtils.isNotEmpty(shopAttaches)){
+            shop.setShopAttachs(shopAttaches);
+        }
+        result.setResult(shop);
         return result;
     }
 
@@ -150,6 +160,7 @@ public class ShopController {
 //        SysUser sysUser=sysUserService.getUserByName(pageShopDto.getUsername());
         result.setResult(shopIPage);
         return result;
+
 
     }
 
