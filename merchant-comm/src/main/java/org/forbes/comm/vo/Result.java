@@ -29,6 +29,12 @@ public class Result<T> implements Serializable {
 	public static final  String COMM_ACTION_MSG = "操作成功";
 	public static final  String COMM_ACTION_ERROR_MSG = "操作失败";
 
+	/*****商家分页查询*****/
+	public static final  String BUSINESS_PAGE_MSG = "商家分页查询成功";
+	public static final  String BUSINESS_PAGE_MSG_ERROR = "商家分页查询失败";
+	public static final  String SELECT_BUSINESS = "查询商家信息成功";
+	public static final  String SELECT_ERROR_BUSINESS = "查询商家信息失败";
+
 
 	/**
 	 * 返回代码

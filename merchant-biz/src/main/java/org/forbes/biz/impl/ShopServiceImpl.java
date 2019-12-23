@@ -2,6 +2,7 @@ package org.forbes.biz.impl;
 
 import java.util.List;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.dubbo.config.annotation.Reference;
 import org.forbes.biz.IShopService;
 import org.forbes.comm.constant.CommonConstant;
@@ -10,15 +11,18 @@ import org.forbes.comm.enums.BizResultEnum;
 import org.forbes.comm.enums.DataTypeEnum;
 import org.forbes.comm.enums.ShopStausEnum;
 import org.forbes.comm.exception.ForbesException;
+import org.forbes.comm.model.PageShopDto;
 import org.forbes.comm.model.RemoteSysUserDto;
 import org.forbes.comm.utils.ConvertUtils;
 import org.forbes.comm.vo.Result;
+import org.forbes.comm.vo.ShopUserVo;
 import org.forbes.dal.entity.Shop;
 import org.forbes.dal.entity.ShopAccount;
 import org.forbes.dal.entity.ShopAttach;
 import org.forbes.dal.mapper.ShopAccountMapper;
 import org.forbes.dal.mapper.ShopAttachMapper;
 import org.forbes.dal.mapper.ShopMapper;
+import org.forbes.dal.mapper.ext.ShopExtMapper;
 import org.forbes.servcie.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -41,7 +45,8 @@ import lombok.extern.slf4j.Slf4j;
 public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IShopService{
 
 	
-	
+	@Autowired
+	ShopExtMapper shopExtMapper;
 	
 	@Reference(version = "1.0.0", timeout = 60000)
 	private ISysUserService sysUserService;
@@ -120,6 +125,20 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
 				throw new ForbesException(BizResultEnum.REMOTE_ERROR_MSG.getBizCode(),BizResultEnum.REMOTE_ERROR_MSG.getBizMessage());
 			}
 		}
+	}
+
+	/***
+	 * getByName方法概述:根据名字查询商家信息
+	 * @param
+	 * @return
+	 * @创建人 Tom
+	 * @创建时间 2019/12/23 9:58
+	 * @修改人 (修改了该文件，请填上修改人的名字)
+	 * @修改日期 (请填上修改该文件时的日期)
+	 */
+	@Override
+	public Shop getByName(String name) {
+		return shopExtMapper.getByName(name);
 	}
 
 }

@@ -1,6 +1,10 @@
 package org.forbes.comm.model;
 
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import lombok.experimental.Accessors;
 
 import javax.validation.constraints.NotEmpty;
 import java.io.Serializable;
@@ -9,6 +13,8 @@ import java.io.Serializable;
  * @author lzw
  * @date 2019/12/11 11:30
  */
+@Data
+@ApiModel(description="商家")
 public class PageShopDto implements Serializable {
 
     private static final long serialVersionUID = 4407786734366553691L;
@@ -24,13 +30,13 @@ public class PageShopDto implements Serializable {
     private String status;
 
     /**
-     * 角色名称
-     * Table:     f_sys_role
-     * Column:    role_name
+     * 角色ID
+     * Table:     f_sys_user_role
+     * Column:    role_id
      * Nullable:  true
      */
-    @ApiModelProperty(value = "角色名称")
-    private String roleName;
+    @ApiModelProperty(value = "角色ID")
+    private Long roleId;
 
     /**
      * 公司名称
@@ -38,7 +44,7 @@ public class PageShopDto implements Serializable {
      * Column:    role_name
      * Nullable:  true
      */
-    @ApiModelProperty(value = "角色名称")
+    @ApiModelProperty(value = "商家名称")
     private String name;
 
     /**
@@ -50,7 +56,5 @@ public class PageShopDto implements Serializable {
     @ApiModelProperty("用户名")
     @NotEmpty(message="用户名为空")
     private String username;
-
-
 
 }

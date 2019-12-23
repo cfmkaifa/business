@@ -10,9 +10,6 @@ import org.forbes.dal.entity.Shop;
 
 public interface IShopService extends IService<Shop> {
 
-	
-	
-	
 	/***
 	 * registShop方法慨述:注册商家
 	 * @param shop void
@@ -22,4 +19,15 @@ public interface IShopService extends IService<Shop> {
 	 * @修改日期 (请填上修改该文件时的日期)
 	 */
 	void registShop(Shop shop);
+
+	/***
+	 * getByName方法概述:根据名字查询商家信息
+	 * @param
+	 * @return
+	 * @创建人 Tom
+	 * @创建时间 2019/12/23 9:58
+	 * @修改人 (修改了该文件，请填上修改人的名字)
+	 * @修改日期 (请填上修改该文件时的日期)
+	 */
+	Shop getByName(String name);
 }

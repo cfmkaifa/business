@@ -1,7 +1,6 @@
 package org.forbes;
 import javax.servlet.MultipartConfigElement;
 
-import org.apache.dubbo.config.spring.context.annotation.DubboComponentScan;
 import org.forbes.comm.constant.CommonConstant;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

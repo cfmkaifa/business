@@ -37,23 +37,21 @@ public class ShopUserVo implements Serializable {
     private String roleName;
 
     /**
-     * 公司名称
+     * 商家名称
      * Table:     f_sys_role
      * Column:    role_name
      * Nullable:  true
      */
-    @ApiModelProperty(value = "公司名称")
+    @ApiModelProperty(value = "商家名称")
     private String name;
 
     /**
-     * 登录账号
-     * Table:     f_sys_user
-     * Column:    username
-     * Nullable:  false
+     * Table:     f_shop
+     * Column:    phone
+     * Nullable:  true
      */
-    @ApiModelProperty("用户名")
-    @NotEmpty(message="用户名为空")
-    private String username;
-
+    @ApiModelProperty(value="电话",required = true)
+    @NotEmpty(message="电话为空")
+    private String phone;
 
 }

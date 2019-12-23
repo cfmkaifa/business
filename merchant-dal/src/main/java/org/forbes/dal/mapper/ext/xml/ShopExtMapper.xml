@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="org.forbes.dal.mapper.ShopExtMapper" >
+  <resultMap id="BaseResultMap" type="org.forbes.dal.entity.Shop" extends="org.forbes.dal.mapper.ShopMapper.BaseResultMap">
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, create_by, create_time, update_by, update_time, name, email, phone, fax, org_code, 
+    legal_person, audit_state
+  </sql>
+
+  <select id="getByName">
+    SELECT
+    <include refid="Base_Column_List" />
+    FROM
+    f_shop
+    WHERE name=#{name,jdbcType=VARCHAR}
+  </select>
+</mapper>

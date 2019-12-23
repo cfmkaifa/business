@@ -11,6 +11,8 @@ import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.forbes.comm.model.SysRole;
+import org.forbes.comm.model.SysUser;
 
 /**
  * Table: f_shop
@@ -85,16 +87,20 @@ public class Shop extends BaseEntity {
      */
 	@ApiModelProperty(value="审核状态",required = true)
     private String auditState;
-	
-	
-	
+
 	@ApiModelProperty(value="商户账号信息",required = true)
 	@TableField(exist=false)
 	private ShopAccount shopAccount;
-	
-	
-	
+
 	@ApiModelProperty(value="0-商家身份证，1-法人身份证，2-营业执照",required = true)
 	@TableField(exist=false)
 	List<ShopAttach> shopAttachs;
+
+	@ApiModelProperty(value="用户信息")
+	@TableField(exist=false)
+	SysUser sysUsers;
+
+	@ApiModelProperty(value="角色信息")
+	@TableField(exist=false)
+	List<SysRole> sysRoles;
 }
