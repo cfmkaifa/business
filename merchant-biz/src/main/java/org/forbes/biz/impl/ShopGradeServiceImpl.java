@@ -25,7 +25,7 @@ public class ShopGradeServiceImpl extends ServiceImpl<ShopGradeMapper, ShopGrade
     ShopGradeMapper shopGradeMapper;
 
     /***
-     *  删除店铺
+     *  删除店铺等级
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
@@ -36,7 +36,7 @@ public class ShopGradeServiceImpl extends ServiceImpl<ShopGradeMapper, ShopGrade
     }
 
 
-    /***批量删除店铺
+    /***批量删除店铺等级
      */
     @Transactional(rollbackFor = Exception.class)
     @Override

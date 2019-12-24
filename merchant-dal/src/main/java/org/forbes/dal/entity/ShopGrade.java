@@ -2,6 +2,7 @@ package org.forbes.dal.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -23,6 +24,7 @@ public class ShopGrade extends BaseEntity{
      * Column:    shop_id
      * Nullable:  true
      */
+    @ApiModelProperty(value = "商家ID",required = true)
     private Long shopId;
 
     /**
@@ -31,6 +33,7 @@ public class ShopGrade extends BaseEntity{
      * Column:    name
      * Nullable:  true
      */
+    @ApiModelProperty(value = "等级名字",required = true)
     private String name;
 
     /**
@@ -39,5 +42,6 @@ public class ShopGrade extends BaseEntity{
      * Column:    grade
      * Nullable:  true
      */
+    @ApiModelProperty(value = "级别0一级1二级2三级",required = true)
     private String grade;
 }

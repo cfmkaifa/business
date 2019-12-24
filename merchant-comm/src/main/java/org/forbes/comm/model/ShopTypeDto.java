@@ -8,21 +8,20 @@ import java.io.Serializable;
 
 /**
  * @author lzw
- * @date 2019/12/23 15:31
+ * @date 2019/12/24 15:16
  */
 @Data
 @ApiModel(description = "商家等级传值")
-public class ShopGradeDto implements Serializable{
+public class ShopTypeDto implements Serializable {
 
-    private static final long serialVersionUID = 7291476721403403596L;
+    private static final long serialVersionUID = 3758252468533488606L;
 
     /**
-     * 等级名字
-     * Table:     f_shop_grade
+     * 分类名字
+     * Table:     f_shop_type
      * Column:    name
      * Nullable:  true
      */
-    @ApiModelProperty(value = "等级名字",required = true)
+    @ApiModelProperty(value = "分类名字",required = true)
     private String name;
-
 }

@@ -1,23 +1,23 @@
 package org.forbes.provider;
 
-import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import io.swagger.annotations.*;
 import lombok.extern.slf4j.Slf4j;
 import org.forbes.biz.IShopGradeService;
+import org.forbes.biz.IShopService;
 import org.forbes.comm.constant.*;
 import org.forbes.comm.enums.BizResultEnum;
 import org.forbes.comm.enums.ShopGradeEnum;
 import org.forbes.comm.exception.ForbesException;
 import org.forbes.comm.model.BasePageDto;
 import org.forbes.comm.model.ShopGradeDto;
-import org.forbes.comm.model.SysRole;
 import org.forbes.comm.utils.ConvertUtils;
 import org.forbes.comm.vo.Result;
 import org.forbes.dal.entity.ShopGrade;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -31,12 +31,16 @@ import java.util.Map;
  */
 @RestController
 @RequestMapping("/grade")
-@Api(tags={"商家等级管理"})
+@Api(tags={"店铺等级管理"})
 @Slf4j
 public class ShopGradeController  {
 
     @Autowired
     IShopGradeService shopGradeService;
+
+    @Autowired
+    @Qualifier(value = "shopManagerService")
+    IShopService shopService;
 
     /***
      * selectPage方法概述:分页查询店铺等级
