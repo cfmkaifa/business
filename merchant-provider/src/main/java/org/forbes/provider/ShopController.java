@@ -157,6 +157,7 @@ public class ShopController {
         IPage<Shop> page = new Page<Shop>(basePageDto.getPageNo(),basePageDto.getPageSize());
         IPage<Shop> shopIPage = shopService.page(page,qw);
 
+        //用户跨库查询分页
 //        SysUser sysUser=sysUserService.getUserByName(pageShopDto.getUsername());
         result.setResult(shopIPage);
         return result;

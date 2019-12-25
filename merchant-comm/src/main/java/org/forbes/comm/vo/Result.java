@@ -43,6 +43,10 @@ public class Result<T> implements Serializable {
 	public static final  String ADD_SHOP_GRADE_MSG = "店铺等级添加成功";
 	public static final  String ADD_SHOP_GRADE_MSG_ERROR = "店铺等级添加失败";
 
+	/*****商家提现分页查询*****/
+	public static final  String SHOP_CASH_PAGE_MSG = "店铺等级分页查询成功";
+	public static final  String SHOP_CASH_PAGE_MSG_ERROR = "店铺等级分页查询失败";
+
 	/**
 	 * 返回代码
 	 */
