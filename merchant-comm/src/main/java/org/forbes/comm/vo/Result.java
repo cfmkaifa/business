@@ -66,6 +66,10 @@ public class Result<T> implements Serializable {
 	public static final  String SHOP_DEPOIST_MSG = "商家预存款查询成功";
 	public static final  String SHOP_DEPOIST_ERROR_MSG = "商家预存款查失败";
 
+	/*****商家提现分页查询*****/
+	public static final  String SHOP_CASH_PAGE_MSG = "店铺等级分页查询成功";
+	public static final  String SHOP_CASH_PAGE_MSG_ERROR = "店铺等级分页查询失败";
+
 	/**
 	 * 返回代码
 	 */

@@ -132,9 +132,9 @@ public class ShopController {
      * @修改日期 (请填上修改该文件时的日期)
      */
     @RequestMapping(value = "/page", method = RequestMethod.GET)
-    @ApiOperation(value="分页查询商家")
-    @ApiResponses(value={
-            @ApiResponse(code=500,message= Result.BUSINESS_PAGE_MSG_ERROR),
+            @ApiOperation(value="分页查询商家")
+            @ApiResponses(value={
+                    @ApiResponse(code=500,message= Result.BUSINESS_PAGE_MSG_ERROR),
             @ApiResponse(code=200,message = Result.BUSINESS_PAGE_MSG)
     })
     public Result<IPage<Shop>> selectShopList(BasePageDto basePageDto,PageShopDto pageShopDto){
@@ -157,7 +157,8 @@ public class ShopController {
         IPage<Shop> page = new Page<Shop>(basePageDto.getPageNo(),basePageDto.getPageSize());
         IPage<Shop> shopIPage = shopService.page(page,qw);
 
-//        SysUser sysUser=sysUserService.getUserByName(pageShopDto.getUsername());
+        //用户跨库查询分页
+//      SysUser sysUser=sysUserService.getUserByName(pageShopDto.getUsername());
         result.setResult(shopIPage);
         return result;
 

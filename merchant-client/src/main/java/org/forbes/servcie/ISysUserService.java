@@ -1,12 +1,9 @@
 package org.forbes.servcie;
 
-import org.forbes.comm.model.RemoteSysUserDto;
 import org.forbes.comm.model.SysRole;
 import org.forbes.comm.model.SysUser;
-import org.forbes.comm.vo.Result;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.cloud.openfeign.FeignClient;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;

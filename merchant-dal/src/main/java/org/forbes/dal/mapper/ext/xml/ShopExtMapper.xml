@@ -4,8 +4,7 @@
   <resultMap id="BaseResultMap" type="org.forbes.dal.entity.Shop" extends="org.forbes.dal.mapper.ShopMapper.BaseResultMap">
   </resultMap>
   <sql id="Base_Column_List" >
-    id, create_by, create_time, update_by, update_time, name, email, phone, fax, org_code, 
-    legal_person, audit_state
+    <include refid="org.forbes.dal.mapper.ShopMapper.Base_Column_List" />
   </sql>
 
   <select id="getByName">
