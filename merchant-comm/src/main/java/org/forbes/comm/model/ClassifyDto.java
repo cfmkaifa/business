@@ -11,17 +11,17 @@ import java.io.Serializable;
  * @date 2019/12/24 15:16
  */
 @Data
-@ApiModel(description = "商家等级传值")
-public class ShopTypeDto implements Serializable {
+@ApiModel(description = "经营分类分页传入参数")
+public class ClassifyDto implements Serializable {
 
     private static final long serialVersionUID = 3758252468533488606L;
 
     /**
-     * 分类名字
+     * 经营分类名称
      * Table:     f_shop_type
      * Column:    name
      * Nullable:  true
      */
-    @ApiModelProperty(value = "分类名字",required = true)
-    private String name;
+    @ApiModelProperty(value = "经营分类名称")
+    private String classifyName;
 }

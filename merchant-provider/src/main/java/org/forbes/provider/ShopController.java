@@ -8,7 +8,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.forbes.biz.IShopAttachService;
 import org.forbes.biz.IShopService;
 import org.forbes.comm.constant.DataColumnConstant;
-import org.forbes.comm.constant.PermsCommonConstant;
+import org.forbes.comm.constant.ShopCommonConstant;
 import org.forbes.comm.enums.BizResultEnum;
 import org.forbes.comm.enums.ShopStausEnum;
 import org.forbes.comm.model.BasePageDto;
@@ -142,16 +142,16 @@ public class ShopController {
         QueryWrapper<Shop> qw = new QueryWrapper<Shop>();
         if (ConvertUtils.isNotEmpty(pageShopDto)) {
             if(ConvertUtils.isNotEmpty(pageShopDto.getStatus()) ){
-                qw.eq(PermsCommonConstant.STATUS,pageShopDto.getStatus());
+                qw.eq(ShopCommonConstant.STATUS,pageShopDto.getStatus());
             }
             if(ConvertUtils.isNotEmpty(pageShopDto.getRoleId()) ){
-                qw.eq(PermsCommonConstant.ROLEID,pageShopDto.getRoleId());
+                qw.eq(ShopCommonConstant.ROLEID,pageShopDto.getRoleId());
             }
             if(ConvertUtils.isNotEmpty(pageShopDto.getName()) ){
-                qw.like(PermsCommonConstant.NAME,pageShopDto.getName());
+                qw.like(ShopCommonConstant.NAME,pageShopDto.getName());
             }
             if(ConvertUtils.isNotEmpty(pageShopDto.getUsername()) ){
-                qw.like(PermsCommonConstant.USERNAME,pageShopDto.getUsername());
+                qw.like(ShopCommonConstant.USERNAME,pageShopDto.getUsername());
             }
         }
         IPage<Shop> page = new Page<Shop>(basePageDto.getPageNo(),basePageDto.getPageSize());

@@ -38,10 +38,33 @@ public class Result<T> implements Serializable {
 	/*****店铺等级分页查询*****/
 	public static final  String SHOP_GRADE_PAGE_MSG = "店铺等级分页查询成功";
 	public static final  String SHOP_GRADE_PAGE_MSG_ERROR = "店铺等级分页查询失败";
-
 	/*****店铺等级添加*****/
 	public static final  String ADD_SHOP_GRADE_MSG = "店铺等级添加成功";
 	public static final  String ADD_SHOP_GRADE_MSG_ERROR = "店铺等级添加失败";
+	/*****店铺等级修改*****/
+	public static final  String UPDATE_SHOP_GRADE_MSG = "店铺等级修改成功";
+	public static final  String UPDATE_SHOP_GRADE_MSG_ERROR = "店铺等级修改失败";
+	/*****店铺等级删除*****/
+	public static final  String DELETE_SHOP_GRADE_MSG = "店铺等级删除成功";
+	public static final  String DELETE_SHOP_GRADE_MSG_ERROR = "店铺等级删除失败";
+
+	/*****店铺分类分页查询*****/
+	public static final  String SHOP_TYPE_PAGE_MSG = "店铺分类分页查询成功";
+	public static final  String SHOP_TYPE_PAGE_MSG_ERROR = "店铺分类分页查询失败";
+	/*****店铺分类添加*****/
+	public static final  String ADD_SHOP_TYPE_MSG = "店铺分类添加成功";
+	public static final  String ADD_SHOP_TYPE_MSG_ERROR = "店铺分类添加失败";
+	/*****店铺分类修改*****/
+	public static final  String UPDATE_SHOP_TYPE_MSG = "店铺分类修改成功";
+	public static final  String UPDATE_SHOP_TYPE_MSG_ERROR = "店铺分类修改失败";
+	/*****店铺分类删除*****/
+	public static final  String DELETE_SHOP_TYPE_MSG = "店铺分类删除成功";
+	public static final  String DELETE_SHOP_TYPE_MSG_ERROR = "店铺分类删除失败";
+
+
+	/*****商家预存款*****/
+	public static final  String SHOP_DEPOIST_MSG = "商家预存款查询成功";
+	public static final  String SHOP_DEPOIST_ERROR_MSG = "商家预存款查失败";
 
 	/**
 	 * 返回代码

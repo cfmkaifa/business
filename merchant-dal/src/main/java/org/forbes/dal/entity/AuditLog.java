@@ -3,6 +3,7 @@ package org.forbes.dal.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 
@@ -24,6 +25,7 @@ public class AuditLog extends BaseEntity {
      * Column:    shop_id
      * Nullable:  true
      */
+    @ApiModelProperty(value = "商家ID",example = "0")
     private Long shopId;
 
     /**
@@ -32,5 +34,6 @@ public class AuditLog extends BaseEntity {
      * Column:    opr_content
      * Nullable:  true
      */
+    @ApiModelProperty(value = "操作内容")
     private String oprContent;
 }

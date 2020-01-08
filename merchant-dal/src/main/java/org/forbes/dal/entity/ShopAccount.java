@@ -3,6 +3,7 @@ package org.forbes.dal.entity;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -25,6 +26,7 @@ public class ShopAccount extends BaseEntity {
      * Column:    shop_id
      * Nullable:  true
      */
+    @ApiModelProperty(value="商家ID",example = "0")
     private Long shopId;
 
     /**
@@ -33,6 +35,7 @@ public class ShopAccount extends BaseEntity {
      * Column:    user_id
      * Nullable:  true
      */
+    @ApiModelProperty(value="用户ID",example = "0")
     private Long userId;
     
     
@@ -59,6 +62,7 @@ public class ShopAccount extends BaseEntity {
      * md5密码盐
      */
 	@JsonIgnore
+    @ApiModelProperty(value = "md5密码盐")
     private String salt;
 	
 	

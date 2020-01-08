@@ -62,7 +62,7 @@ public class ShopGradeController  {
         QueryWrapper<ShopGrade> qw = new QueryWrapper<ShopGrade>();
         if (ConvertUtils.isNotEmpty(shopGradeDto)) {
             if(ConvertUtils.isNotEmpty(shopGradeDto.getName()) ){
-                qw.like(PermsCommonConstant.NAME,shopGradeDto.getName());
+                qw.like(ShopCommonConstant.NAME,shopGradeDto.getName());
             }
         }
         IPage<ShopGrade> page = new Page<ShopGrade>(basePageDto.getPageNo(),basePageDto.getPageSize());
@@ -105,8 +105,8 @@ public class ShopGradeController  {
      */
     @ApiOperation("编辑店铺等级")
     @ApiResponses(value = {
-            @ApiResponse(code=200,message = Result.COMM_ACTION_MSG),
-            @ApiResponse(code=500,message = Result.COMM_ACTION_ERROR_MSG)
+            @ApiResponse(code=200,message = Result.UPDATE_SHOP_GRADE_MSG),
+            @ApiResponse(code=500,message = Result.UPDATE_SHOP_GRADE_MSG_ERROR)
     })
     @RequestMapping(value = "/edit",method = RequestMethod.PUT)
     public  Result<ShopGrade> updateShopGrade(@RequestBody @Validated(value=UpdateValid.class) ShopGrade shopGrade){
@@ -135,6 +135,10 @@ public class ShopGradeController  {
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "id",value = "店铺等级ID",required = true)
     })
+    @ApiResponses(value = {
+            @ApiResponse(code=200,message = Result.DELETE_SHOP_GRADE_MSG),
+            @ApiResponse(code=500,message = Result.DELETE_SHOP_GRADE_MSG_ERROR)
+    })
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
     public Result<ShopGrade> delete(@RequestParam(name="id",required=true) String id) {
         Result<ShopGrade> result = new Result<ShopGrade>();
@@ -160,6 +164,10 @@ public class ShopGradeController  {
     @ApiOperation("批量删除店铺等级")
     @ApiImplicitParams(value = {
             @ApiImplicitParam(name = "ids",value = "店铺等级IDs",required = true)
+    })
+    @ApiResponses(value = {
+            @ApiResponse(code=200,message = Result.DELETE_SHOP_GRADE_MSG),
+            @ApiResponse(code=500,message = Result.DELETE_SHOP_GRADE_MSG_ERROR)
     })
     @RequestMapping(value = "/delete-batch", method = RequestMethod.DELETE)
     public Result<Boolean> deleteBatch(@RequestParam(name="ids",required=true) String ids) {

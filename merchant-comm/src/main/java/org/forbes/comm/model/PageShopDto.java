@@ -35,7 +35,7 @@ public class PageShopDto implements Serializable {
      * Column:    role_id
      * Nullable:  true
      */
-    @ApiModelProperty(value = "角色ID")
+    @ApiModelProperty(value = "角色ID",example = "0")
     private Long roleId;
 
     /**

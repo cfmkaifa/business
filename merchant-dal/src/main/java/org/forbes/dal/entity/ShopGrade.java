@@ -24,7 +24,7 @@ public class ShopGrade extends BaseEntity{
      * Column:    shop_id
      * Nullable:  true
      */
-    @ApiModelProperty(value = "商家ID",required = true)
+    @ApiModelProperty(value = "商家ID",example = "0",required = true)
     private Long shopId;
 
     /**
@@ -42,6 +42,6 @@ public class ShopGrade extends BaseEntity{
      * Column:    grade
      * Nullable:  true
      */
-    @ApiModelProperty(value = "级别0一级1二级2三级",required = true)
+    @ApiModelProperty(value = "级别,0一级1二级2三级",required = true)
     private String grade;
 }

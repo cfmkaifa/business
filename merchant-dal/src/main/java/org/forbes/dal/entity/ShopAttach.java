@@ -2,6 +2,7 @@ package org.forbes.dal.entity;
 
 import com.baomidou.mybatisplus.annotation.TableName;
 
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
@@ -25,6 +26,7 @@ public class ShopAttach extends BaseEntity {
      * Column:    data_id
      * Nullable:  true
      */
+	@ApiModelProperty(value = "数据ID",example = "0")
     private Long dataId;
 
     /**
@@ -33,6 +35,7 @@ public class ShopAttach extends BaseEntity {
      * Column:    orders_sort
      * Nullable:  true
      */
+    @ApiModelProperty(value = "排序",example = "0")
     private Integer ordersSort;
 
     /**
