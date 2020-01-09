@@ -21,6 +21,9 @@ public class ShopClassify extends BaseEntity {
 
     /**
      * 商家id
+     * Table:     f_shop_classify
+     * Column:    is_enabled
+     * Nullable:  true
      */
     @ApiModelProperty(value = "商家id", required = true)
     @NotNull(message = "商家id为空")
@@ -28,8 +31,21 @@ public class ShopClassify extends BaseEntity {
 
     /**
      * 经营分类id
+     * Table:     f_shop_classify
+     * Column:    is_enabled
+     * Nullable:  true
      */
     @ApiModelProperty(value = "经营分类id", required = true)
     @NotNull(message = "经营分类id为空")
     private Long classifyId;
+
+
+    /**
+     * 是否启用,0否1是
+     * Table:     f_shop_classify
+     * Column:    is_enabled
+     * Nullable:  true
+     */
+    @ApiModelProperty(value = "是否启用,0否1是")
+    private String isEnabled;
 }

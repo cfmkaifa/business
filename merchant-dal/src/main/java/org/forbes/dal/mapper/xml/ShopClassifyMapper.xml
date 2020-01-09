@@ -15,9 +15,11 @@
         <result column="shop_id" property="shopId" jdbcType="BIGINT"/>
         <!--经营分类id-->
         <result column="classify_id" property="classifyId" jdbcType="BIGINT"/>
+        <!--是否启用-->
+        <result column="is_enabled" property="isEnabled" jdbcType="BIGINT"/>
     </resultMap>
     <sql id="Base_Column_List">
-    id, create_by, create_time, update_by, update_time, shop_id, classify_id
+    id, create_by, create_time, update_by, update_time, shop_id, classify_id,is_enabled
   </sql>
 
 </mapper>

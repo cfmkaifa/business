@@ -19,9 +19,9 @@
         sd.debit,
         sd.memo,
         sd.type,
-        sd.business_id,
+        sd.shop_id,
         s.name
-        FROM f_shop_deposit sd JOIN f_shop s ON sd.business_id = s.id
+        FROM f_shop_deposit sd JOIN f_shop s ON sd.shop_id = s.id
         <where>
             <if test="pageDto.name != null and pageDto.name !='' and pageDto.name != 'null'">
                 s.name like concat('%',#{pageDto.name,jdbcType=VARCHAR},'%')

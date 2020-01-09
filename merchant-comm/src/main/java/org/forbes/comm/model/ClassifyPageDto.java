@@ -12,7 +12,7 @@ import java.io.Serializable;
  */
 @Data
 @ApiModel(description = "经营分类分页传入参数")
-public class ClassifyDto implements Serializable {
+public class ClassifyPageDto implements Serializable {
 
     private static final long serialVersionUID = 3758252468533488606L;
 

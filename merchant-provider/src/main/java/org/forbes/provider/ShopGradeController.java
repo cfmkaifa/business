@@ -89,6 +89,19 @@ public class ShopGradeController  {
     public Result<ShopGrade> addShopGrade(@RequestBody @Validated(value=SaveValid.class) ShopGrade shopGrade){
         Result<ShopGrade> result=new Result<ShopGrade>();
         shopGrade.setGrade(ShopGradeEnum.ZREO.getCode());
+        //传入参数为空
+        if(ConvertUtils.isEmpty(shopGrade)){
+            result.setBizCode(BizResultEnum.ENTITY_EMPTY.getBizCode());
+            result.setMessage(BizResultEnum.ENTITY_EMPTY.getBizMessage());
+            return result;
+        }
+        int nameCount = shopGradeService.count(new QueryWrapper<ShopGrade>().eq(ShopGradeConstant.NAME,shopGrade.getName()));
+        //等级名称重复
+        if(nameCount > 0){
+            result.setBizCode(BizResultEnum.SHOP_GRADE_NAME_EXISTS.getBizCode());
+            result.setMessage(BizResultEnum.SHOP_GRADE_NAME_EXISTS.getBizMessage());
+            return result;
+        }
         shopGradeService.save(shopGrade);
         result.setResult(shopGrade);
         return result;

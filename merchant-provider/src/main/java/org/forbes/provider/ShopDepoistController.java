@@ -44,7 +44,6 @@ public class ShopDepoistController {
     })
     public Result<IPage<ShopDepositVo>> page(BasePageDto basePageDto, ShopDepositPageDto pageDto){
         log.debug("传入参数为:" + JSON.toJSONString(pageDto));
-
         Result<IPage<ShopDepositVo>> result = new Result<>();
         IPage<ShopDepositVo> page = new Page<ShopDepositVo>(basePageDto.getPageNo(),basePageDto.getPageSize());
         IPage<ShopDepositVo> deposits = shopDepoistService.shopDepositPage(page,pageDto);
@@ -52,4 +51,7 @@ public class ShopDepoistController {
         log.debug("返回值为:" + JSON.toJSONString(result.getResult()));
         return result;
     }
+
+
+
 }

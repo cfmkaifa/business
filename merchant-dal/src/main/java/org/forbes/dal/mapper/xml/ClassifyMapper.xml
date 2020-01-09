@@ -15,11 +15,13 @@
         <result column="classify_name" property="classifyName" jdbcType="VARCHAR"/>
         <!--分类描述-->
         <result column="described" property="described" jdbcType="VARCHAR"/>
-        <!--经营分类编码-->
-        <result column="code" property="code" jdbcType="VARCHAR"/>
+        <!--排序-->
+        <result column="sort_no" property="sortNo" jdbcType="VARCHAR"/>
+        <!--保证金-->
+        <result column="bond" property="bond" jdbcType="DECIMAL"/>
     </resultMap>
     <sql id="Base_Column_List">
-      id, create_by, create_time, update_by, update_time, classify_name, described, code
+      id, create_by, create_time, update_by, update_time, classify_name, described, sort_no, bond
     </sql>
 
 </mapper>

@@ -8,6 +8,8 @@ import lombok.EqualsAndHashCode;
 import org.forbes.comm.constant.SaveValid;
 
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 
 /**
  * @author lzw
@@ -41,11 +43,21 @@ public class Classify extends BaseEntity{
     private String described;
 
     /**
-     * 分类编码
+     * 排序
      * Table:     f_shop_type
-     * Column:    code
+     * Column:    sort_no
      * Nullable:  true
      */
-    @ApiModelProperty(value = "分类编码")
-    private String code;
+    @ApiModelProperty(value = "排序",required = true)
+    private String sortNo;
+
+    /**
+     * 保证金
+     * Table:     f_shop_type
+     * Column:    bond
+     * Nullable:  true
+     */
+    @ApiModelProperty(value = "保证金",required = true,example = "0")
+    @NotNull(message = "保证金为空")
+    private BigDecimal bond;
 }

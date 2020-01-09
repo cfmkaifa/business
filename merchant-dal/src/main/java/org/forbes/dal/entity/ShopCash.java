@@ -62,10 +62,10 @@ public class ShopCash extends BaseEntity{
     /**
      * 商家id
      * Table:     f_shop_cash
-     * Column:    business_id
+     * Column:    shop_id
      * Nullable:  true
      */
-    private Long businessId;
+    private Long shopId;
 
 
 

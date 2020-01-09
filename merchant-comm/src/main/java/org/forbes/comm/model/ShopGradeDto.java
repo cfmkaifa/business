@@ -22,7 +22,7 @@ public class ShopGradeDto implements Serializable{
      * Column:    name
      * Nullable:  true
      */
-    @ApiModelProperty(value = "等级名字",required = true)
+    @ApiModelProperty(value = "等级名字")
     private String name;
 
 }

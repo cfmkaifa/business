@@ -11,7 +11,7 @@ import org.forbes.comm.constant.*;
 import org.forbes.comm.enums.BizResultEnum;
 import org.forbes.comm.exception.ForbesException;
 import org.forbes.comm.model.BasePageDto;
-import org.forbes.comm.model.ClassifyDto;
+import org.forbes.comm.model.ClassifyPageDto;
 import org.forbes.comm.utils.ConvertUtils;
 import org.forbes.comm.vo.Result;
 import org.forbes.dal.entity.Classify;
@@ -27,7 +27,7 @@ import java.util.Arrays;
  * @date 2019/12/24 15:11
  */
 @RestController
-@RequestMapping("/type")
+@RequestMapping("/classify")
 @Api(tags = {"经营分类管理"})
 @Slf4j
 public class ClassifyController {
@@ -40,7 +40,7 @@ public class ClassifyController {
 
     /***
      * selectPage方法概述:分页查询经营分类
-     * @param basePageDto, classifyDto
+     * @param basePageDto, classifyPageDto
      * @return Classify
      * @创建人 Frunk
      * @创建时间 2019/12/24 15:18
@@ -53,12 +53,12 @@ public class ClassifyController {
             @ApiResponse(code = 500, message = Result.SHOP_TYPE_PAGE_MSG_ERROR),
             @ApiResponse(code = 200, message = Result.SHOP_TYPE_PAGE_MSG)
     })
-    public Result<IPage<Classify>> selectPage(BasePageDto basePageDto, ClassifyDto classifyDto) {
+    public Result<IPage<Classify>> selectPage(BasePageDto basePageDto, ClassifyPageDto classifyPageDto) {
         Result<IPage<Classify>> result = new Result<>();
         QueryWrapper<Classify> qw = new QueryWrapper<Classify>();
-        if (ConvertUtils.isNotEmpty(classifyDto)) {
-            if (ConvertUtils.isNotEmpty(classifyDto.getClassifyName())) {
-                qw.like(ClassifyConstant.CLASSIFY_NAME, classifyDto.getClassifyName());
+        if (ConvertUtils.isNotEmpty(classifyPageDto)) {
+            if (ConvertUtils.isNotEmpty(classifyPageDto.getClassifyName())) {
+                qw.like(ClassifyConstant.CLASSIFY_NAME, classifyPageDto.getClassifyName());
             }
         }
         IPage<Classify> page = new Page<Classify>(basePageDto.getPageNo(), basePageDto.getPageSize());
@@ -66,6 +66,35 @@ public class ClassifyController {
         result.setResult(shopPage);
         return result;
     }
+
+
+    /***
+     * selectById方法概述:编辑经营分类
+     * @param id
+     * @return Classify
+     * @创建人 Frunk
+     * @创建时间 2019/12/24 15:29
+     * @修改人 (修改了该文件，请填上修改人的名字)
+     * @修改日期 (请填上修改该文件时的日期)
+     */
+    @ApiOperation("查看经营分类详情")
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = Result.SHOP_TYPE_PAGE_MSG_ERROR),
+            @ApiResponse(code = 500, message = Result.SHOP_TYPE_PAGE_MSG)
+    })
+    @RequestMapping(value = "/get-classify-by-id/{id}", method = RequestMethod.PUT)
+    public Result<Classify> selectById(@PathVariable String id) {
+        Result<Classify> result = new Result<Classify>();
+        Classify classify = classifyService.getById(id);
+        if (ConvertUtils.isEmpty(classify)) {
+            result.setBizCode(BizResultEnum.CLASSIFY_NOT_EXISTS.getBizCode());
+            result.setMessage(BizResultEnum.CLASSIFY_NOT_EXISTS.getBizFormateMessage());
+            return result;
+        }
+        result.setResult(classify);
+        return result;
+    }
+
 
     /***
      * addClassify方法概述:增加经营分类
@@ -84,12 +113,23 @@ public class ClassifyController {
     })
     public Result<Classify> addClassify(@RequestBody @Validated(value = SaveValid.class) Classify classify) {
         Result<Classify> result = new Result<Classify>();
-        String code = classify.getCode();
-        //查询是否和其他分类编码一致
-        int existsCount = classifyService.count(new QueryWrapper<Classify>().eq(DataColumnConstant.CODE, code));
-        if (existsCount > 0) {
-            result.setBizCode(BizResultEnum.CLASSIFY_CODE_EXISTS.getBizCode());
-            result.success(String.format(BizResultEnum.CLASSIFY_CODE_EXISTS.getBizFormateMessage(), code));
+        //传入对象不能为空判断
+        if (ConvertUtils.isEmpty(classify)) {
+            result.setBizCode(BizResultEnum.ENTITY_EMPTY.getBizCode());
+            result.setMessage(BizResultEnum.ENTITY_EMPTY.getBizFormateMessage());
+            return result;
+        }
+        int nameCount = classifyService.count(new QueryWrapper<Classify>().eq(ClassifyConstant.CLASSIFY_NAME, classify.getClassifyName()));
+        //经营分类名称已存在
+        if (nameCount > 0) {
+            result.setBizCode(BizResultEnum.CLASSIFY_NAME_EXISTS.getBizCode());
+            result.setMessage(BizResultEnum.CLASSIFY_NAME_EXISTS.getBizFormateMessage());
+            return result;
+        }
+        //保证金不能为空判断
+        if (ConvertUtils.isEmpty(classify.getBond())) {
+            result.setBizCode(BizResultEnum.EMPTY.getBizCode());
+            result.setMessage(BizResultEnum.EMPTY.getBizFormateMessage());
             return result;
         }
         classifyService.save(classify);
@@ -115,21 +155,24 @@ public class ClassifyController {
     public Result<Classify> updateClassify(@RequestBody @Validated(value = UpdateValid.class) Classify classify) {
         Result<Classify> result = new Result<Classify>();
         Classify old = classifyService.getById(classify.getId());
+        //传入对象不能为空判断
         if (ConvertUtils.isEmpty(old)) {
             result.setBizCode(BizResultEnum.ENTITY_EMPTY.getBizCode());
             result.setMessage(BizResultEnum.ENTITY_EMPTY.getBizMessage());
             return result;
         }
-        //判断当前分类编码与输入的是否一致
-        if (!old.getCode().equals(classify.getCode())) {
-            String code = classify.getCode();
-            //查询是否和其他分类编码一致
-            int existsCount = classifyService.count(new QueryWrapper<Classify>().eq(DataColumnConstant.CODE, code));
-            if (existsCount > 0) {
-                result.setBizCode(BizResultEnum.CLASSIFY_CODE_EXISTS.getBizCode());
-                result.success(String.format(BizResultEnum.CLASSIFY_CODE_EXISTS.getBizFormateMessage(), code));
-                return result;
-            }
+        int nameCount = classifyService.count(new QueryWrapper<Classify>().eq(ClassifyConstant.CLASSIFY_NAME, classify.getClassifyName()));
+        //经营分类名称已存在
+        if (nameCount > 0) {
+            result.setBizCode(BizResultEnum.CLASSIFY_NAME_EXISTS.getBizCode());
+            result.setMessage(BizResultEnum.CLASSIFY_NAME_EXISTS.getBizFormateMessage());
+            return result;
+        }
+        //保证金不能为空判断
+        if (ConvertUtils.isEmpty(classify.getBond())) {
+            result.setBizCode(BizResultEnum.EMPTY.getBizCode());
+            result.setMessage(BizResultEnum.EMPTY.getBizFormateMessage());
+            return result;
         }
         classifyService.updateById(classify);
         result.setResult(classify);

@@ -7,12 +7,16 @@ import java.util.stream.Collectors;
 
 import com.google.common.collect.Maps;
 
+/**
+ * @author Administrator
+ */
+
 public enum DataTypeEnum {
 
-	
-	ID_CARD("0","商家身份证"),
-	CORP_ID_CARD("1","法人身份证"),
-	TRADING_CERTIFICATE("2","营业执照");
+
+    ID_CARD("0", "商家身份证"),
+    CORP_ID_CARD("1", "法人身份证"),
+    TRADING_CERTIFICATE("2", "营业执照");
 
     /***编码
      */
@@ -32,9 +36,9 @@ public enum DataTypeEnum {
      * @修改人 (修改了该文件，请填上修改人的名字)
      * @修改日期 (请填上修改该文件时的日期)
      */
-    public static boolean existsCode(String code){
+    public static boolean existsCode(String code) {
         return Arrays.asList(DataTypeEnum.values()).stream()
-                .filter(tEnum -> tEnum.getCode().equals(code)).count() > 0 ;
+                .filter(tEnum -> tEnum.getCode().equals(code)).count() > 0;
     }
 
 
@@ -46,9 +50,9 @@ public enum DataTypeEnum {
      * @修改人 (修改了该文件，请填上修改人的名字)
      * @修改日期 (请填上修改该文件时的日期)
      */
-    public static List<Map<String,String>> receEnums(){
+    public static List<Map<String, String>> receEnums() {
         return Arrays.asList(DataTypeEnum.values()).stream().map(tEnum -> {
-            Map<String,String> reponseMap = Maps.newHashMap();
+            Map<String, String> reponseMap = Maps.newHashMap();
             reponseMap.put("code", tEnum.getCode());
             reponseMap.put("name", tEnum.getName());
             return reponseMap;
@@ -61,12 +65,10 @@ public enum DataTypeEnum {
      * @param code
      * @param name
      */
-    DataTypeEnum(String code, String name){
+    DataTypeEnum(String code, String name) {
         this.code = code;
         this.name = name;
     }
-
-
 
 
     /**
