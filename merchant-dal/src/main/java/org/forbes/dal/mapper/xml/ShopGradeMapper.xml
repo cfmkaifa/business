@@ -1,22 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="org.forbes.dal.mapper.ShopGradeMapper" >
-  <resultMap id="BaseResultMap" type="org.forbes.dal.entity.ShopGrade" >
-    <!-- 主键 -->
-    <id column="id" property="id" jdbcType="BIGINT" />
-    <result column="create_by" property="createBy" jdbcType="VARCHAR" />
-    <!-- 创建时间 -->
-    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
-    <!-- 更新人 -->
-    <result column="update_by" property="updateBy" jdbcType="VARCHAR" />
-    <!-- 更新时间 -->
-    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
-    <result column="shop_id" property="shopId" jdbcType="BIGINT" />
-    <result column="name" property="name" jdbcType="VARCHAR" />
-    <result column="grade" property="grade" jdbcType="VARCHAR" />
-  </resultMap>
-  <sql id="Base_Column_List" >
-    id, create_by, create_time, update_by, update_time,shop_id, name, grade
-  </sql>
+<mapper namespace="org.forbes.dal.mapper.ShopGradeMapper">
+    <resultMap id="BaseResultMap" type="org.forbes.dal.entity.ShopGrade">
+        <!-- 主键 -->
+        <id column="id" property="id" jdbcType="BIGINT"/>
+        <result column="create_by" property="createBy" jdbcType="VARCHAR"/>
+        <!-- 创建时间 -->
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <!-- 更新人 -->
+        <result column="update_by" property="updateBy" jdbcType="VARCHAR"/>
+        <!-- 更新时间 -->
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+        <!--等级名称-->
+        <result column="grade_name" property="gradeName" jdbcType="VARCHAR"/>
+        <!--可发布商品数量-->
+        <result column="release_quantity" property="releaseQuantity" jdbcType="INTEGER"/>
+        <!--服务费-->
+        <result column="service_charge" property="serviceCharge" jdbcType="DECIMAL"/>
+        <!--备注-->
+        <result column="remark" property="remark" jdbcType="DECIMAL"/>
+        <!--是否允许注册-->
+        <result column="is_registration" property="isRegistration" jdbcType="DECIMAL"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+      id, create_by, create_time, update_by, update_time, grade_name, release_quantity, service_charge, remark, is_registration
+    </sql>
 
 </mapper>

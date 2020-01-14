@@ -15,6 +15,7 @@ import org.forbes.comm.model.BasePageDto;
 import org.forbes.comm.model.ShopGradeDto;
 import org.forbes.comm.utils.ConvertUtils;
 import org.forbes.comm.vo.Result;
+import org.forbes.dal.entity.Shop;
 import org.forbes.dal.entity.ShopGrade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -26,14 +27,14 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * @author lzw
+ * @author frunk
  * @date 2019/12/23 14:57
  */
 @RestController
 @RequestMapping("/grade")
-@Api(tags={"店铺等级管理"})
+@Api(tags = {"店铺等级管理"})
 @Slf4j
-public class ShopGradeController  {
+public class ShopGradeController {
 
     @Autowired
     IShopGradeService shopGradeService;
@@ -45,28 +46,29 @@ public class ShopGradeController  {
     /***
      * selectPage方法概述:分页查询店铺等级
      * @param basePageDto, shopGradeDto
-     * @return org.forbes.comm.vo.Result<com.baomidou.mybatisplus.core.metadata.IPage<org.forbes.dal.entity.ShopGrade>>
-     * @创建人 Tom
+     * @return ShopGrade
+     * @创建人 Frunk
      * @创建时间 2019/12/23 16:23
      * @修改人 (修改了该文件，请填上修改人的名字)
      * @修改日期 (请填上修改该文件时的日期)
      */
     @RequestMapping(value = "/page", method = RequestMethod.GET)
-    @ApiOperation(value="分页查询店铺等级")
-    @ApiResponses(value={
-            @ApiResponse(code=500,message= Result.SHOP_GRADE_PAGE_MSG_ERROR),
-            @ApiResponse(code=200,message = Result.SHOP_GRADE_PAGE_MSG)
+    @ApiOperation(value = "分页查询店铺等级")
+    @ApiResponses(value = {
+            @ApiResponse(code = 500, message = Result.SHOP_GRADE_PAGE_MSG_ERROR),
+            @ApiResponse(code = 200, message = Result.SHOP_GRADE_PAGE_MSG)
     })
-    public Result<IPage<ShopGrade>> selectPage(BasePageDto basePageDto,ShopGradeDto shopGradeDto){
+    public Result<IPage<ShopGrade>> selectPage(BasePageDto basePageDto, ShopGradeDto shopGradeDto) {
         Result<IPage<ShopGrade>> result = new Result<>();
         QueryWrapper<ShopGrade> qw = new QueryWrapper<ShopGrade>();
         if (ConvertUtils.isNotEmpty(shopGradeDto)) {
-            if(ConvertUtils.isNotEmpty(shopGradeDto.getName()) ){
-                qw.like(ShopCommonConstant.NAME,shopGradeDto.getName());
+            //等级名称条件搜索
+            if (ConvertUtils.isNotEmpty(shopGradeDto.getGradeName())) {
+                qw.like(ShopGradeCommonConstant.GRADE_NAME, shopGradeDto.getGradeName());
             }
         }
-        IPage<ShopGrade> page = new Page<ShopGrade>(basePageDto.getPageNo(),basePageDto.getPageSize());
-        IPage<ShopGrade> shopGradeIPage = shopGradeService.page(page,qw);
+        IPage<ShopGrade> page = new Page<ShopGrade>(basePageDto.getPageNo(), basePageDto.getPageSize());
+        IPage<ShopGrade> shopGradeIPage = shopGradeService.page(page, qw);
         result.setResult(shopGradeIPage);
         return result;
     }
@@ -74,30 +76,40 @@ public class ShopGradeController  {
     /***
      * addShopGrade方法概述:增加店铺等级
      * @param shopGrade
-     * @return org.forbes.comm.vo.Result<org.forbes.dal.entity.ShopGrade>
-     * @创建人 Tom
+     * @return ShopGrade
+     * @创建人 Frunk
      * @创建时间 2019/12/23 16:26
      * @修改人 (修改了该文件，请填上修改人的名字)
      * @修改日期 (请填上修改该文件时的日期)
      */
     @RequestMapping(value = "/add", method = RequestMethod.POST)
     @ApiOperation("增加店铺等级")
-    @ApiResponses(value={
-            @ApiResponse(code=500,message= Result.ADD_SHOP_GRADE_MSG_ERROR),
-            @ApiResponse(code=200,message = Result.ADD_SHOP_GRADE_MSG)
+    @ApiResponses(value = {
+            @ApiResponse(code = 500, message = Result.ADD_SHOP_GRADE_MSG_ERROR),
+            @ApiResponse(code = 200, message = Result.ADD_SHOP_GRADE_MSG)
     })
-    public Result<ShopGrade> addShopGrade(@RequestBody @Validated(value=SaveValid.class) ShopGrade shopGrade){
-        Result<ShopGrade> result=new Result<ShopGrade>();
-        shopGrade.setGrade(ShopGradeEnum.ZREO.getCode());
-        //传入参数为空
-        if(ConvertUtils.isEmpty(shopGrade)){
+    public Result<ShopGrade> addShopGrade(@RequestBody @Validated(value = SaveValid.class) ShopGrade shopGrade) {
+        Result<ShopGrade> result = new Result<ShopGrade>();
+        if (ConvertUtils.isEmpty(shopGrade)) {
             result.setBizCode(BizResultEnum.ENTITY_EMPTY.getBizCode());
             result.setMessage(BizResultEnum.ENTITY_EMPTY.getBizMessage());
             return result;
         }
-        int nameCount = shopGradeService.count(new QueryWrapper<ShopGrade>().eq(ShopGradeConstant.NAME,shopGrade.getName()));
-        //等级名称重复
-        if(nameCount > 0){
+        //等级名称为空
+        if (ConvertUtils.isEmpty(shopGrade.getGradeName())) {
+            result.setBizCode(BizResultEnum.EMPTY.getBizCode());
+            result.setMessage(BizResultEnum.EMPTY.getBizMessage());
+            return result;
+        }
+        //服务费为空
+        if (ConvertUtils.isEmpty(shopGrade.getServiceCharge())) {
+            result.setBizCode(BizResultEnum.EMPTY.getBizCode());
+            result.setMessage(BizResultEnum.EMPTY.getBizMessage());
+            return result;
+        }
+        int existShopGrade = shopGradeService.count(new QueryWrapper<ShopGrade>().eq(ShopGradeCommonConstant.GRADE_NAME, shopGrade.getGradeName()));
+        //等级名称已存在
+        if (existShopGrade > 0) {
             result.setBizCode(BizResultEnum.SHOP_GRADE_NAME_EXISTS.getBizCode());
             result.setMessage(BizResultEnum.SHOP_GRADE_NAME_EXISTS.getBizMessage());
             return result;
@@ -110,24 +122,37 @@ public class ShopGradeController  {
     /***
      * updateShopGrade方法概述:编辑店铺等级
      * @param shopGrade
-     * @return org.forbes.comm.vo.Result<org.forbes.dal.entity.ShopGrade>
-     * @创建人 Tom
+     * @return ShopGrade
+     * @创建人 Frunk
      * @创建时间 2019/12/23 17:31
      * @修改人 (修改了该文件，请填上修改人的名字)
      * @修改日期 (请填上修改该文件时的日期)
      */
     @ApiOperation("编辑店铺等级")
     @ApiResponses(value = {
-            @ApiResponse(code=200,message = Result.UPDATE_SHOP_GRADE_MSG),
-            @ApiResponse(code=500,message = Result.UPDATE_SHOP_GRADE_MSG_ERROR)
+            @ApiResponse(code = 200, message = Result.UPDATE_SHOP_GRADE_MSG),
+            @ApiResponse(code = 500, message = Result.UPDATE_SHOP_GRADE_MSG_ERROR)
     })
-    @RequestMapping(value = "/edit",method = RequestMethod.PUT)
-    public  Result<ShopGrade> updateShopGrade(@RequestBody @Validated(value=UpdateValid.class) ShopGrade shopGrade){
-        Result<ShopGrade> result=new Result<ShopGrade>();
+    @RequestMapping(value = "/edit", method = RequestMethod.PUT)
+    public Result<ShopGrade> updateShopGrade(@RequestBody @Validated(value = UpdateValid.class) ShopGrade shopGrade) {
+        Result<ShopGrade> result = new Result<ShopGrade>();
         ShopGrade old = shopGradeService.getById(shopGrade.getId());
-        if(ConvertUtils.isEmpty(old)){
+        //要修改的记录为空
+        if (ConvertUtils.isEmpty(old)) {
             result.setBizCode(BizResultEnum.ENTITY_EMPTY.getBizCode());
             result.setMessage(BizResultEnum.ENTITY_EMPTY.getBizMessage());
+            return result;
+        }
+        //等级名称为空
+        if (ConvertUtils.isEmpty(shopGrade.getGradeName())) {
+            result.setBizCode(BizResultEnum.EMPTY.getBizCode());
+            result.setMessage(BizResultEnum.EMPTY.getBizMessage());
+            return result;
+        }
+        //服务费为空
+        if (ConvertUtils.isEmpty(shopGrade.getServiceCharge())) {
+            result.setBizCode(BizResultEnum.EMPTY.getBizCode());
+            result.setMessage(BizResultEnum.EMPTY.getBizMessage());
             return result;
         }
         shopGradeService.updateById(shopGrade);
@@ -138,27 +163,34 @@ public class ShopGradeController  {
     /***
      * delete方法概述:删除店铺等级
      * @param id
-     * @return org.forbes.comm.vo.Result<org.forbes.dal.entity.ShopGrade>
-     * @创建人 Tom
+     * @return ShopGrade
+     * @创建人 Frunk
      * @创建时间 2019/12/23 17:33
      * @修改人 (修改了该文件，请填上修改人的名字)
      * @修改日期 (请填上修改该文件时的日期)
      */
     @ApiOperation("删除店铺等级")
     @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "id",value = "店铺等级ID",required = true)
+            @ApiImplicitParam(name = "id", value = "店铺等级ID", required = true)
     })
     @ApiResponses(value = {
-            @ApiResponse(code=200,message = Result.DELETE_SHOP_GRADE_MSG),
-            @ApiResponse(code=500,message = Result.DELETE_SHOP_GRADE_MSG_ERROR)
+            @ApiResponse(code = 200, message = Result.DELETE_SHOP_GRADE_MSG),
+            @ApiResponse(code = 500, message = Result.DELETE_SHOP_GRADE_MSG_ERROR)
     })
     @RequestMapping(value = "/delete", method = RequestMethod.DELETE)
-    public Result<ShopGrade> delete(@RequestParam(name="id",required=true) String id) {
+    public Result<ShopGrade> delete(@RequestParam(name = "id", required = true) String id) {
         Result<ShopGrade> result = new Result<ShopGrade>();
         ShopGrade shopGrade = shopGradeService.getById(id);
-        if(ConvertUtils.isEmpty(shopGrade)){
+        if (ConvertUtils.isEmpty(shopGrade)) {
             result.setBizCode(BizResultEnum.ENTITY_EMPTY.getBizCode());
             result.setMessage(BizResultEnum.ENTITY_EMPTY.getBizMessage());
+            return result;
+        }
+        int count = shopService.count(new QueryWrapper<Shop>().eq(ShopCommonConstant.GRADE_ID, shopGrade.getId()));
+        //该等级正在被使用中
+        if (count > 0) {
+            result.setBizCode(BizResultEnum.SHOP_GRADE_USED.getBizCode());
+            result.setMessage(BizResultEnum.SHOP_GRADE_USED.getBizMessage());
             return result;
         }
         shopGradeService.removeById(id);
@@ -168,27 +200,27 @@ public class ShopGradeController  {
     /***
      * deleteBatch方法概述:批量删除店铺等级
      * @param ids
-     * @return org.forbes.comm.vo.Result<java.lang.Boolean>
-     * @创建人 Tom
+     * @return Boolean
+     * @创建人 Frunk
      * @创建时间 2019/12/23 17:34
      * @修改人 (修改了该文件，请填上修改人的名字)
      * @修改日期 (请填上修改该文件时的日期)
      */
     @ApiOperation("批量删除店铺等级")
     @ApiImplicitParams(value = {
-            @ApiImplicitParam(name = "ids",value = "店铺等级IDs",required = true)
+            @ApiImplicitParam(name = "ids", value = "店铺等级IDs", required = true)
     })
     @ApiResponses(value = {
-            @ApiResponse(code=200,message = Result.DELETE_SHOP_GRADE_MSG),
-            @ApiResponse(code=500,message = Result.DELETE_SHOP_GRADE_MSG_ERROR)
+            @ApiResponse(code = 200, message = Result.DELETE_SHOP_GRADE_MSG),
+            @ApiResponse(code = 500, message = Result.DELETE_SHOP_GRADE_MSG_ERROR)
     })
     @RequestMapping(value = "/delete-batch", method = RequestMethod.DELETE)
-    public Result<Boolean> deleteBatch(@RequestParam(name="ids",required=true) String ids) {
+    public Result<Boolean> deleteBatch(@RequestParam(name = "ids", required = true) String ids) {
         // 定义实体类的数据库查询对象
         Result<Boolean> result = new Result<Boolean>();
         try {
             shopGradeService.removeByIds(Arrays.asList(ids.split(CommonConstant.SEPARATOR)));
-        }catch(ForbesException e){
+        } catch (ForbesException e) {
             result.setBizCode(e.getErrorCode());
             result.setMessage(e.getErrorMsg());
         }
@@ -197,9 +229,8 @@ public class ShopGradeController  {
 
     /***
      * receShopGradeStaus方法概述:
-     * @param
-     * @return org.forbes.comm.vo.Result<java.util.List<java.util.Map<java.lang.String,java.lang.String>>>
-     * @创建人 Tom
+     * @return
+     * @创建人 Frunk
      * @创建时间 2019/12/23 18:07
      * @修改人 (修改了该文件，请填上修改人的名字)
      * @修改日期 (请填上修改该文件时的日期)

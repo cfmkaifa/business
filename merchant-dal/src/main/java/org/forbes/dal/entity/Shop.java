@@ -88,6 +88,15 @@ public class Shop extends BaseEntity {
 	@ApiModelProperty(value="审核状态",required = true)
     private String auditState;
 
+	/**
+     * 商家等级id
+     * Table:     f_shop
+     * Column:    grade_id
+     * Nullable:  true
+     */
+	@ApiModelProperty(value="商家等级id",example = "0")
+    private Long gradeId;
+
 	@ApiModelProperty(value="商户账号信息",required = true)
 	@TableField(exist=false)
 	private ShopAccount shopAccount;

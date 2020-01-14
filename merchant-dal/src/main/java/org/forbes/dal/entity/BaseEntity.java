@@ -12,6 +12,10 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import org.forbes.comm.constant.UpdateValid;
 
+/**
+ * 基类
+ * @author
+ */
 @Data
 public class BaseEntity implements Serializable  {
 

@@ -8,6 +8,8 @@ public interface ShopCommonConstant {
 
 
     /*****商家相关常量*****/
+    //商家id
+    public static final String ID = "id";
     //用户状态
     public static final String STATUS = "status";
     //公司名字
@@ -16,4 +18,6 @@ public interface ShopCommonConstant {
     public static final String ROLEID = "role_id";
     //用户状态
     public static final String USERNAME = "username";
+    //商家等级id
+    public static final String GRADE_ID = "grade_id";
 }

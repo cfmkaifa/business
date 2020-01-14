@@ -28,7 +28,14 @@ public enum BizResultEnum {
     /**
      * 商家等级003
      **/
-    SHOP_GRADE_NAME_EXISTS("003003001", "等级名称已存在", "%s对应等级名称已存在");
+    SHOP_GRADE_NAME_EXISTS("003003001", "等级名称已存在", "%s对应等级名称已存在"),
+    SHOP_GRADE_USED("003003002", "等级被使用中", "%s对应等级被使用中"),
+
+    /**
+     * 商家注册项004
+     **/
+    SHOP_REGISTRATION_NAME_EXISTS("003004001","商家注册项名称已存在","%s对应商家注册项名称已存在"),
+    SHOP_REGISTRATION_NAME_USED("003004002","商家注册项被使用中","%s对应商家注册项被使用中");
 
 
     /**

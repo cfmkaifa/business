@@ -7,15 +7,25 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-/***
- * ShopGradeEnum概要说明：商家等级
- * @author Frunk
- */
-public enum ShopGradeEnum {
+public enum ShopRegEnum {
 
-    FIRST("0","一级会员"),
-    SECOND("1","二级会员"),
-    THIRD("2","三级会员");
+    NAME("0","名称"),
+    PICTURE("1","图片"),
+    BUSINESS_LICENSE("2","营业执照"),
+    BUSINESS_LICENSE_PICTURE("3","营业执照图片"),
+    LEGAL_PERSON_NAME("4","法人姓名"),
+    LEGAL_PERSON_CARD_ID("5","法人身份证"),
+    LEGAL_PERSON_CARD_ID_PICTURE("6","法人身份证图片"),
+    ORGANIZATION_CODE("7","组织机构代码"),
+    ORGANIZATION_CODE_PICTURE("8","组织机构代码证图片"),
+    TAXPAYER_IDENTIFICATION_NUMBER("9","纳税人识别号"),
+    TEXT("10","文本"),
+    TAX_REGISTRATION_CERTIFICATE_PICTURE("11","税务登记证图片"),
+    BANK_ACCOUNT_NAME("12","银行开户名"),
+    COMPANY_BANK_ACCOUNT("13","公司银行账号"),
+    PHONE("14","电话"),
+    ADRESS("15","地址"),
+    ZIP_CODE("16","邮编");
 
     /***编码
      */
@@ -35,9 +45,9 @@ public enum ShopGradeEnum {
      * @修改人 (修改了该文件，请填上修改人的名字)
      * @修改日期 (请填上修改该文件时的日期)
      */
-    public static boolean existsShopGradeEnum(String code){
-        return Arrays.asList(ShopGradeEnum.values()).stream()
-                .filter(shopGrade -> ((ShopGradeEnum)shopGrade).getCode().equals(code)).count() > 0 ;
+    public static boolean existsShopRegEnum(String code){
+        return Arrays.asList(ShopRegEnum.values()).stream()
+                .filter(shopReg -> ((ShopRegEnum)shopReg).getCode().equals(code)).count() > 0 ;
     }
 
 
@@ -50,11 +60,11 @@ public enum ShopGradeEnum {
      * @修改日期 (请填上修改该文件时的日期)
      */
     public static List<Map<String,String>> receShopGradeStaus(){
-        return Arrays.asList(ShopGradeEnum.values()).stream().map(shopGrade -> {
+        return Arrays.asList(ShopRegEnum.values()).stream().map(shopRegs -> {
             Map<String,String> reponseMap = Maps.newHashMap();
-            ShopGradeEnum shoptGrade = ((ShopGradeEnum)shopGrade);
-            reponseMap.put("code", shoptGrade.getCode());
-            reponseMap.put("name", shoptGrade.getName());
+            ShopRegEnum shopReg = ((ShopRegEnum)shopRegs);
+            reponseMap.put("code", shopReg.getCode());
+            reponseMap.put("name", shopReg.getName());
             return reponseMap;
         }).collect(Collectors.toList());
     }
@@ -65,7 +75,7 @@ public enum ShopGradeEnum {
      * @param code
      * @param name
      */
-    ShopGradeEnum(String code, String name){
+    ShopRegEnum(String code, String name){
         this.code = code;
         this.name = name;
     }
@@ -102,5 +112,6 @@ public enum ShopGradeEnum {
     public void setName(String name) {
         this.name = name;
     }
+
 
 }

@@ -4,7 +4,12 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.baomidou.mybatisplus.extension.toolkit.SqlHelper;
 import org.forbes.biz.IShopGradeService;
-import org.forbes.comm.constant.DataColumnConstant;
+import org.forbes.biz.IShopService;
+import org.forbes.comm.constant.ShopCommonConstant;
+import org.forbes.comm.enums.BizResultEnum;
+import org.forbes.comm.exception.ForbesException;
+import org.forbes.comm.utils.ConvertUtils;
+import org.forbes.dal.entity.Shop;
 import org.forbes.dal.entity.ShopGrade;
 import org.forbes.dal.mapper.ShopGradeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,24 +29,25 @@ public class ShopGradeServiceImpl extends ServiceImpl<ShopGradeMapper, ShopGrade
     @Autowired
     ShopGradeMapper shopGradeMapper;
 
-    /***
-     *  删除店铺等级
-     */
-    @Transactional(rollbackFor = Exception.class)
-    @Override
-    public boolean removeById(Serializable id) {
-        shopGradeMapper.delete(new QueryWrapper<ShopGrade>().eq(DataColumnConstant.ID, id));
-        boolean delBool =  SqlHelper.delBool(baseMapper.deleteById(id));
-        return delBool;
-    }
-
+    @Autowired
+    IShopService shopService;
 
     /***批量删除店铺等级
      */
     @Transactional(rollbackFor = Exception.class)
     @Override
     public boolean removeByIds(Collection<? extends Serializable> idList) {
-        shopGradeMapper.delete(new QueryWrapper<ShopGrade>().in(DataColumnConstant.ID, idList));
+        idList.stream().forEach(id->{
+            ShopGrade shopGrade = this.getById(id);
+            if(ConvertUtils.isEmpty(shopGrade)){
+                throw new ForbesException(BizResultEnum.ENTITY_EMPTY.getBizCode(),BizResultEnum.ENTITY_EMPTY.getBizMessage());
+            }
+            int count = shopService.count(new QueryWrapper<Shop>().eq(ShopCommonConstant.GRADE_ID,shopGrade.getId()));
+            //等级正在被使用中
+            if(count > 0){
+                throw new ForbesException(BizResultEnum.SHOP_GRADE_USED.getBizCode(),BizResultEnum.SHOP_GRADE_USED.getBizMessage());
+            }
+        });
         boolean delBool =  SqlHelper.delBool(baseMapper.deleteBatchIds(idList));
         return delBool;
     }

@@ -62,6 +62,19 @@ public class Result<T> implements Serializable {
 	public static final  String DELETE_SHOP_TYPE_MSG_ERROR = "经营分类删除失败";
 
 
+	/*****商家注册项查询*****/
+	public static final  String REGISTRATION_ITEM_PAGE_MSG = "商家注册项分页查询成功";
+	public static final  String REGISTRATION_ITEM_PAGE_MSG_ERROR = "商家注册项分页查询失败";
+	/*****商家注册项添加*****/
+	public static final  String ADD_REGISTRATION_ITEM_MSG = "商家注册项添加成功";
+	public static final  String ADD_REGISTRATION_ITEM_MSG_ERROR = "商家注册项添加失败";
+	/*****商家注册项修改*****/
+	public static final  String UPDATE_REGISTRATION_ITEM_MSG = "商家注册项修改成功";
+	public static final  String UPDATE_REGISTRATION_ITEM_MSG_ERROR = "商家注册项修改失败";
+	/*****商家注册项删除*****/
+	public static final  String DELETE_REGISTRATION_ITEM_MSG = "商家注册项删除成功";
+	public static final  String DELETE_REGISTRATION_ITEM_MSG_ERROR = "商家注册项删除失败";
+
 	/*****商家预存款*****/
 	public static final  String SHOP_DEPOIST_MSG = "商家预存款查询成功";
 	public static final  String SHOP_DEPOIST_ERROR_MSG = "商家预存款查失败";

@@ -21,10 +21,13 @@
     <result column="legal_person" property="legalPerson" jdbcType="VARCHAR" />
     <!-- 审核状态-1未审核，1-审核中，2-审核通过，3-审核不通过 -->
     <result column="audit_state" property="auditState" jdbcType="CHAR" />
+
+    <!-- 审核状态-1未审核，1-审核中，2-审核通过，3-审核不通过 -->
+    <result column="grade_id" property="gradeId" jdbcType="BIGINT" />
   </resultMap>
   <sql id="Base_Column_List" >
     id, create_by, create_time, update_by, update_time, name, email, phone, fax, org_code, 
-    legal_person, audit_state
+    legal_person, audit_state,grade_id
   </sql>
 
 </mapper>

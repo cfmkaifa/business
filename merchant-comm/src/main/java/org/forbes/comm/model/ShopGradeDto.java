@@ -7,7 +7,7 @@ import lombok.Data;
 import java.io.Serializable;
 
 /**
- * @author lzw
+ * @author frunk
  * @date 2019/12/23 15:31
  */
 @Data
@@ -17,12 +17,14 @@ public class ShopGradeDto implements Serializable{
     private static final long serialVersionUID = 7291476721403403596L;
 
     /**
-     * 等级名字
+     * 等级名称
      * Table:     f_shop_grade
-     * Column:    name
+     * Column:    grade_name
      * Nullable:  true
      */
-    @ApiModelProperty(value = "等级名字")
-    private String name;
+    @ApiModelProperty(value = "等级名称")
+    private String gradeName;
+
+
 
 }

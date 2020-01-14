@@ -58,7 +58,7 @@ public class ClassifyController {
         QueryWrapper<Classify> qw = new QueryWrapper<Classify>();
         if (ConvertUtils.isNotEmpty(classifyPageDto)) {
             if (ConvertUtils.isNotEmpty(classifyPageDto.getClassifyName())) {
-                qw.like(ClassifyConstant.CLASSIFY_NAME, classifyPageDto.getClassifyName());
+                qw.like(ClassifyCommonConstant.CLASSIFY_NAME, classifyPageDto.getClassifyName());
             }
         }
         IPage<Classify> page = new Page<Classify>(basePageDto.getPageNo(), basePageDto.getPageSize());
@@ -69,7 +69,7 @@ public class ClassifyController {
 
 
     /***
-     * selectById方法概述:编辑经营分类
+     * selectById方法概述:查看经营分类详情
      * @param id
      * @return Classify
      * @创建人 Frunk
@@ -77,12 +77,12 @@ public class ClassifyController {
      * @修改人 (修改了该文件，请填上修改人的名字)
      * @修改日期 (请填上修改该文件时的日期)
      */
-    @ApiOperation("查看经营分类详情")
+    @ApiOperation("通过id查看经营分类详情")
     @ApiResponses(value = {
             @ApiResponse(code = 200, message = Result.SHOP_TYPE_PAGE_MSG_ERROR),
             @ApiResponse(code = 500, message = Result.SHOP_TYPE_PAGE_MSG)
     })
-    @RequestMapping(value = "/get-classify-by-id/{id}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/get-classify-by-id/{id}", method = RequestMethod.GET)
     public Result<Classify> selectById(@PathVariable String id) {
         Result<Classify> result = new Result<Classify>();
         Classify classify = classifyService.getById(id);
@@ -119,7 +119,7 @@ public class ClassifyController {
             result.setMessage(BizResultEnum.ENTITY_EMPTY.getBizFormateMessage());
             return result;
         }
-        int nameCount = classifyService.count(new QueryWrapper<Classify>().eq(ClassifyConstant.CLASSIFY_NAME, classify.getClassifyName()));
+        int nameCount = classifyService.count(new QueryWrapper<Classify>().eq(ClassifyCommonConstant.CLASSIFY_NAME, classify.getClassifyName()));
         //经营分类名称已存在
         if (nameCount > 0) {
             result.setBizCode(BizResultEnum.CLASSIFY_NAME_EXISTS.getBizCode());
@@ -159,13 +159,6 @@ public class ClassifyController {
         if (ConvertUtils.isEmpty(old)) {
             result.setBizCode(BizResultEnum.ENTITY_EMPTY.getBizCode());
             result.setMessage(BizResultEnum.ENTITY_EMPTY.getBizMessage());
-            return result;
-        }
-        int nameCount = classifyService.count(new QueryWrapper<Classify>().eq(ClassifyConstant.CLASSIFY_NAME, classify.getClassifyName()));
-        //经营分类名称已存在
-        if (nameCount > 0) {
-            result.setBizCode(BizResultEnum.CLASSIFY_NAME_EXISTS.getBizCode());
-            result.setMessage(BizResultEnum.CLASSIFY_NAME_EXISTS.getBizFormateMessage());
             return result;
         }
         //保证金不能为空判断
