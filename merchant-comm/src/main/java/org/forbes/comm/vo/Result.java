@@ -83,6 +83,10 @@ public class Result<T> implements Serializable {
 	public static final  String SHOP_CASH_PAGE_MSG = "店铺等级分页查询成功";
 	public static final  String SHOP_CASH_PAGE_MSG_ERROR = "店铺等级分页查询失败";
 
+	/********添加商家提示消息************/
+	public static final String SHOP_ADD_MSG="添加商家成功";
+	public static final String SHOP_ADD_ERROR_MSG="添加商家失败";
+
 	/**
 	 * 返回代码
 	 */

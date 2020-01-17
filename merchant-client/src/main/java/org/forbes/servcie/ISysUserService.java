@@ -55,4 +55,5 @@ public interface ISysUserService {
 	@RequestMapping(value = "/user/get-role-list", method = RequestMethod.GET)
 	List<SysRole> selectRoleByUserId(@RequestParam("userId") Long userId);
 
+
 }

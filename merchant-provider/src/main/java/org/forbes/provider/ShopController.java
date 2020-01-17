@@ -1,5 +1,6 @@
 package org.forbes.provider;
 
+import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
@@ -8,9 +9,11 @@ import lombok.extern.slf4j.Slf4j;
 import org.forbes.biz.IShopAttachService;
 import org.forbes.biz.IShopService;
 import org.forbes.comm.constant.DataColumnConstant;
+import org.forbes.comm.constant.SaveValid;
 import org.forbes.comm.constant.ShopCommonConstant;
 import org.forbes.comm.enums.BizResultEnum;
 import org.forbes.comm.enums.ShopStausEnum;
+import org.forbes.comm.exception.ForbesException;
 import org.forbes.comm.model.BasePageDto;
 import org.forbes.comm.model.PageShopDto;
 import org.forbes.comm.model.SysRole;
@@ -22,6 +25,7 @@ import org.forbes.dal.entity.ShopAttach;
 import org.forbes.servcie.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -161,9 +165,72 @@ public class ShopController {
 //      SysUser sysUser=sysUserService.getUserByName(pageShopDto.getUsername());
         result.setResult(shopIPage);
         return result;
-
-
     }
 
 
+    /**
+     * @Author xfx
+     * @Date 16:27 2020/1/16
+     * @Param [shop]
+     * @return org.forbes.dal.entity.Shop
+     * 添加发布需求人（智工网）
+     **/
+    @RequestMapping(value = "/add", method = RequestMethod.POST)
+    @ApiOperation(value="添加商家")
+    @ApiResponses(value={
+            @ApiResponse(code=500,message= Result.SHOP_ADD_ERROR_MSG),
+            @ApiResponse(code=200,message = Result.SHOP_ADD_MSG)
+    })
+    public Result<Shop> add(@RequestBody @Validated(value=SaveValid.class) Shop shop){
+        log.debug("================:"+JSON.toJSONString(shop));
+        Result<Shop> result=new Result<Shop>();
+        try {
+            //判断邮箱是否已存在
+            String email = shop.getEmail();
+            int emailcount=shopService.count(new QueryWrapper<Shop>().eq(DataColumnConstant.EMAIL,email));
+            if(emailcount>0){
+                result.setBizCode(BizResultEnum.EMAIL_EXIST.getBizCode());
+                result.setMessage(String.format(BizResultEnum.EMAIL_EXIST.getBizFormateMessage(),email));
+                return result;
+            }
+            //判断电话是否已存在
+            String phone = shop.getFax();
+            int phonecount=shopService.count(new QueryWrapper<Shop>().eq(DataColumnConstant.PHONE,phone));
+            if(phonecount>0){
+                result.setBizCode(BizResultEnum.PHONE_EXIST.getBizCode());
+                result.setMessage(String.format(BizResultEnum.PHONE_EXIST.getBizFormateMessage(),phone));
+                return result;
+            }
+            //判断传真是否已存在
+            String fax = shop.getEmail();
+            int faxcount=shopService.count(new QueryWrapper<Shop>().eq(DataColumnConstant.FAX,fax));
+            if(faxcount>0){
+                result.setBizCode(BizResultEnum.FAX_EXIST.getBizCode());
+                result.setMessage(String.format(BizResultEnum.FAX_EXIST.getBizFormateMessage(),fax));
+                return result;
+            }
+            //判断社会信用代码是否已存在
+            String credit = shop.getEmail();
+            int creditcount=shopService.count(new QueryWrapper<Shop>().eq(DataColumnConstant.CREDIT,credit));
+            if(creditcount>0){
+                result.setBizCode(BizResultEnum.CREDIT_EXIST.getBizCode());
+                result.setMessage(String.format(BizResultEnum.CREDIT_EXIST.getBizFormateMessage(),credit));
+                return result;
+            }
+            //判断名称是否已存在
+            String name = shop.getEmail();
+            int namecount=shopService.count(new QueryWrapper<Shop>().eq(DataColumnConstant.NAME,name));
+            if(namecount>0){
+                result.setBizCode(BizResultEnum.NAME_EXIST.getBizCode());
+                result.setMessage(String.format(BizResultEnum.NAME_EXIST.getBizFormateMessage(),name));
+                return result;
+            }
+            shopService.save(shop);
+            result.setResult(shop);
+        }catch (ForbesException e){
+            result.setBizCode(e.getErrorCode());
+         	result.setMessage(e.getErrorMsg());
+        }
+        return result;
+    }
 }

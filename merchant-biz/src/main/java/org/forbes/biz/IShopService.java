@@ -30,4 +30,14 @@ public interface IShopService extends IService<Shop> {
 	 * @修改日期 (请填上修改该文件时的日期)
 	 */
 	Shop getByName(String name);
+
+	/**
+	 * @Author xfx
+	 * @Date 17:05 2020/1/16
+	 * @Param [shop]
+	 * @return void
+	 * 添加发布需求人（智工网）
+	 **/
+	void addShop(Shop shop);
+
 }

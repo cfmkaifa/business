@@ -2,20 +2,14 @@ package org.forbes.biz.impl;
 
 import java.util.List;
 
-import com.baomidou.mybatisplus.core.metadata.IPage;
 import org.apache.dubbo.config.annotation.Reference;
 import org.forbes.biz.IShopService;
 import org.forbes.comm.constant.CommonConstant;
-import org.forbes.comm.enums.AdminFlagEnum;
 import org.forbes.comm.enums.BizResultEnum;
 import org.forbes.comm.enums.DataTypeEnum;
 import org.forbes.comm.enums.ShopStausEnum;
 import org.forbes.comm.exception.ForbesException;
-import org.forbes.comm.model.PageShopDto;
-import org.forbes.comm.model.RemoteSysUserDto;
 import org.forbes.comm.utils.ConvertUtils;
-import org.forbes.comm.vo.Result;
-import org.forbes.comm.vo.ShopUserVo;
 import org.forbes.dal.entity.Shop;
 import org.forbes.dal.entity.ShopAccount;
 import org.forbes.dal.entity.ShopAttach;
@@ -143,4 +137,16 @@ public class ShopServiceImpl extends ServiceImpl<ShopMapper, Shop> implements IS
 		return shopExtMapper.getByName(name);
 	}
 
+	/**
+	 * @Author xfx
+	 * @Date 17:06 2020/1/16
+	 * @Param [shop]
+	 * @return void
+	 * 添加发布需求人（智工网）
+	 **/
+	@Override
+	@Transactional(rollbackFor=Exception.class)
+	public void addShop(Shop shop) {
+			baseMapper.insert(shop);
+	}
 }

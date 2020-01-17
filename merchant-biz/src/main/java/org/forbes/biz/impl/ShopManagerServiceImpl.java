@@ -13,4 +13,9 @@ public class ShopManagerServiceImpl extends ServiceImpl<ShopMapper, Shop> implem
     public Shop getByName(String name) {
         return null;
     }
+
+    @Override
+    public void addShop(Shop shop) {
+       return;
+    }
 }
